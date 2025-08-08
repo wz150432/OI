@@ -1,2 +1,121 @@
-# OI-cpp
+# OI-CPP
 All are codes and knowledge related to OI
+
+- ## BASIC INTRODUCTION
+  - STL
+  - Stress Test
+  - Commonly Used Library Functions
+  - Estimation of Time Complexity
+- ## SUNDRY
+  - Binary Search
+  - Greedy
+  - Sort
+  - High Precision
+  - Bitwise Operation
+  - Prefix Sum and Difference
+  - Binary Lifting
+  - KMP Matching
+  - Centroid Decomposition
+  - Block Processing
+  - CDQ Divide and Conquer
+- ## SEARCH
+  - BFS
+  - DFS
+  - Pruning
+  - Iterative Deepening
+  - Meet-in-the-Middle
+  - Bidirectional BFS
+  - Bidirectional DFS
+  - Data Structure Optimization For Searching
+  - A*
+  - IDE*
+  - Simulated Annealing
+- ## DATA STRCUTURE
+  - Stack And Queue
+  - Monotonic Stack And Queue
+  - Heap
+  - Sparse Table
+  - Hash Table
+  - Disjoint Set Union
+  - Binary Indexed Tree
+  - Segment Tree
+  - Trie
+  - Treap
+  - Splay
+  - Mo's Algorithm
+  - Persistent Segment Tree
+  - Persisitent Trie
+  - Suffix Array
+  - Suffix Automaton
+  - Prefix Automaton
+  - Aho Coracisk Automaton
+  - Dancing Links
+  - Leftist Tree
+  - Heavy Light Decomposition
+  - Block Linked List
+  - Dynamic Tree
+  - Centroid Tree
+- ## DP
+  - Linear DP
+  - Knapsack DP
+  - Interval DP
+  - State Machine DP
+  - State Compression DP
+  - Tree DP
+  - Digit DP
+  - Nested DP
+  - Plug DP
+  - Slope Optimized DP
+  - Quadrilateral Inequality Optimized DP
+  - WQS Binary Search
+  - Data Structure Optimized DP
+  - Matrix Exponentiation Optimized DP
+- ## GRAPH THEOTY
+  - Introduction of Graphs and Trees
+  - Topological Sort
+  - Dijkstra's Algorithm
+  - Bellman Ford Algorithm
+  - Floyd's Algorithm
+  - Minimum Spanning Tree
+  - Bipartite Graph
+  - Difference Constraints
+  - Lowest Common Ancestor
+  - Strongly Connected Components
+  - Biconnected Components
+  - Eulerian Circuit and Path
+  - Maximum Flow
+  - Minimum Cut
+  - Cost Flow
+  - 2 Satisfiability
+  - Edmonds' Algorithm
+  - Prufer Code
+- ## COMPUTATIONAL GEOMETRY
+  - Basic Knowledges
+  - Convex Hull
+  - Scan Line
+  - Half Plane Intersection
+  - Rotating Calipers
+  - Triangulation
+  - Adaptive Simpson's Integration
+- ## MATH
+  - Prime Numbers and Divisors
+  - Euler's Totient Function
+  - Sieve Method
+  - Binary Exponentiation
+  - Euclidean Algorithm
+  - Chinese Remainder Theorem
+  - Combinatorial Number Calculation
+  - Gaussian Elimination
+  - Inclusion Exclusion Principle
+  - Game Theory
+  - Matrix Multiplication
+  - Probability and Mathematical Expectation
+  - Baby Step Giant Step
+  - Fast Fourier Transform
+  - Number Theoretic Transform
+  - Fast Walsh Hadamard Transform
+  - Generating Function
+  - Möbius Inversion
+  - Burnside's Lemma and Pólya's Theorem
+  - Catalan Numbers and Stirling Numbers
+  - Linear Basis
