@@ -3,7 +3,7 @@ All are codes and knowledge related to OI
 
 - ## BASIC INTRODUCTION
   - STL
-  - Stress Test
+  - [Pair Checking]()
   - Commonly Used Library Functions
   - Estimation of Time Complexity
 - ## SUNDRY
