@@ -3,7 +3,7 @@ All are codes and knowledge related to OI
 
 - ## BASIC INTRODUCTION
   - STL
-  - [Pair Checking]()
+  - [Pair Checking](https://github.com/wz150432/OI-cpp/blob/main/Pair%20Checking.md)
   - Commonly Used Library Functions
   - Estimation of Time Complexity
 - ## SUNDRY
