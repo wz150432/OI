@@ -7,7 +7,7 @@ All are codes and knowledge related to OI
   - [Commonly Used Library Functions](https://github.com/wz150432/OI-cpp/blob/main/Commonly%20Used%20Library%20Functions.md)
   - Estimation of Time Complexity
 - ## SUNDRY
-  - Binary Search
+  - [Binary Search](https://github.com/wz150432/OI-cpp/blob/main/Binary%20Search.md)
   - Greedy
   - [Sort](https://github.com/wz150432/OI-cpp/blob/main/Sort.md)
   - High Precision
