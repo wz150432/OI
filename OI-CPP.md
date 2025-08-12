@@ -1,5 +1,4 @@
-# OI-CPP
-All are codes and knowledge related to OI
+# All the codes and knowledge related to OI can be seen here
 
 - ## BASIC INTRODUCTION
   - STL
