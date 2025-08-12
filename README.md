@@ -9,7 +9,7 @@ All are codes and knowledge related to OI
 - ## SUNDRY
   - Binary Search
   - Greedy
-  - Sort
+  - [Sort](https://github.com/wz150432/OI-cpp/blob/main/Sort.md)
   - High Precision
   - Bitwise Operation
   - Prefix Sum and Difference
