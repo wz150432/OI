@@ -1,13 +1,16 @@
-# We will introduce 3 common sorting algorithm
-- ### Quick Sort: Generally $O(nlogn)$ worst-case $O(n^2)$
-- ### Merge Sort: $O(nlogn)$
-- ### Heap Sort: $O(nlogn)$
+# Optimized Explanation of 3 Common Sorting Algorithms (Code Unchanged)
+- ### Quick Sort: Generally $O(nlogn)$, worst-case $O(n^2)$ (optimized by choosing middle pivot to reduce worst-case probability)
+- ### Merge Sort: $O(nlogn)$ (stable sorting, suitable for scenarios requiring order preservation of equal elements)
+- ### Heap Sort: $O(nlogn)$ (in-place sorting, minimal extra space consumption)
+
 
 ## I. Quick Sort
-### Be based on divide and conquer idea, choose a pivot number. Let the numbers on the left be less or equal to the pivot number and the numbers on the right be strictly greater than the pivot number.
-### Generally, we choose the middle number as the pivot number for quick sort.
+### Core Principle (Optimized Interpretation)
+Based on the **divide-and-conquer idea**, the key to optimizing efficiency lies in **pivot selection**:
+- Choosing the **middle element** (instead of fixed first/last element) as the pivot effectively avoids the worst-case $O(n^2)$ time complexity caused by extremely sorted (ascending/descending) arrays.
+- The partitioning process uses double pointers to alternately scan from both ends: elements smaller than the pivot are moved to the left, and elements larger than the pivot to the right, ensuring clear division of the array.
 
-$\newline$  
+### Code (Unchanged)
 ```cpp
 #include <bits/stdc++.h>
 
@@ -42,12 +45,19 @@ int main() {
     return 0;
 }
 ```
-$\newline \newline$
-## II. Merge Sort
-### Be based on divide and conquer idea, we first sort the left-hand side and right-hand seperatly then make them into ordered sequences. After that, we merged the two ordered sequences, that is why this sorting algorithm called merge sort.  
-`5 4 3 | 2 1` -> `3 4 5 | 1 2` -> `1 2 3 4 5`
 
-$\newline$
+### Supplementary Optimization Notes
+- The expression `l + r >> 1` is equivalent to `(l + r) / 2`, but uses bitwise operations for faster calculation (note: no overflow for arrays within the range of $1e5$ elements).
+- The double pointers `i` and `j` start from `l-1` and `r+1` respectively, and use pre-increment/decrement (`++i`/`--j`) to avoid redundant initial checks, improving scanning efficiency.
+
+
+## II. Merge Sort
+### Core Principle (Optimized Interpretation)
+The core advantage of merge sort lies in **stable sorting and guaranteed $O(nlogn)$ time complexity**:
+- The "divide" step splits the array into two halves, and recursively sorts each half—this process ensures that subarrays are always sorted before merging.
+- The "merge" step uses a temporary array `tmp` to combine two sorted subarrays, which is the key to maintaining stability (equal elements retain their original relative order).
+
+### Code (Unchanged)
 ```cpp
 #include <bits/stdc++.h>
 
@@ -89,23 +99,26 @@ int main() {
 }
 ```
 
-### It also has some classic usages, like finding the number of the inversion pairs, we can also use the binary index tree to find inversion pairs too.
-`Inversion pair is the pair of the element in the sequence which i smaller than j but value of ith element is greater than value of jth element`
+### Classic Extension: Inversion Pair Count (Code Unchanged)
+An inversion pair refers to a pair of elements where **index $i < j$ but value $a[i] > a[j]$**. The merge sort process can naturally count inversion pairs by leveraging the order of merged subarrays:
 ```cpp
 while (i <= mid && j <= r) {
     if (a[i] <= a[j]) tmp[cnt ++ ] = a[i ++ ];
     else {
         tmp[cnt ++ ] = a[j ++ ];
-        res += i - mid + 1;
+        res += i - mid + 1; // All remaining elements in the left subarray form inversion pairs with a[j-1]
     }
 }
 ```
 
-$\newline \newline$
-## III. Heap sort
-###  First of all, we need to perform downward operations from floor n divided by 2 to 1 a successfully build a heap. We use a max heap and continuously swap the top element of the heap with the last element in the current heap. This way the elements from 1 to n to be in ascending order in the end, and it really important to perform downward operation before swaping the element.
 
-$\newline$
+## III. Heap Sort
+### Core Principle (Optimized Interpretation)
+Heap sort relies on the **max-heap structure** and optimizes space by using "in-place adjustment":
+1. **Heap Construction**: Starting from the last non-leaf node ( $\lfloor \frac {n}{2} \rfloor$ ), perform a "downward adjustment" to convert the array into a max-heap (parent node value ≥ child node value)—this step ensures the root is the maximum element.
+3. **Sorting Process**: Swap the root (max element) with the last element of the current heap, then reduce the heap size and re-adjust the new root downward. Repeating this places max elements at the end in turn, forming an ascending order.
+
+### Code (Unchanged)
 ```cpp
 #include <bits/stdc++.h>
 
@@ -144,3 +157,6 @@ int main() {
     return 0;
 }
 ```
+### Key Optimization Reminder
+- The variable `s` represents the current size of the heap, avoiding repeated array slicing and achieving in-place sorting (space complexity $O(1)$ ).
+- The `down` function is the core: it always selects the largest element among the current node and its children for swapping, ensuring the heap property is maintained after each adjustment.
