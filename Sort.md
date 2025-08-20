@@ -1,4 +1,4 @@
-# Optimized Explanation of 3 Common Sorting Algorithms (Code Unchanged)
+# Optimized Explanation of 3 Common Sorting Algorithms
 - ### Quick Sort: Generally $O(nlogn)$, worst-case $O(n^2)$ (optimized by choosing middle pivot to reduce worst-case probability)
 - ### Merge Sort: $O(nlogn)$ (stable sorting, suitable for scenarios requiring order preservation of equal elements)
 - ### Heap Sort: $O(nlogn)$ (in-place sorting, minimal extra space consumption)
