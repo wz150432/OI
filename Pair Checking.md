@@ -1,4 +1,4 @@
-# The process of pair checking
+# The Process of Pair Checking
 
 - ### First of all, there is a brute-force procedure that guarantees correctness, and there is also a solution whose correctness is unknown.
 - ### Then there is a file written according to this problem, used to generate random data
