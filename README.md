@@ -1,9 +1,9 @@
 # Contains many OI algorithms and related knowledge
 
-Dive into a comprehensive repository brimming with essential techniques, proven strategies, and in-depth knowledge that form the backbone of Informatics Olympiad success. 
+### Dive into a comprehensive repository brimming with essential techniques, proven strategies, and in-depth knowledge that form the backbone of Informatics Olympiad success. 
 $\newline$
 
-From foundational concepts to advanced problem-solving methodologies, every critical skill and insight you need to excel in OI competitions is meticulously curated here, ready to elevate your coding prowess and contest performance.
+### From foundational concepts to advanced problem-solving methodologies, every critical skill and insight you need to excel in OI competitions is meticulously curated here, ready to elevate your coding prowess and contest performance.
 
 <details>
   <summary><h3>BASIC INTRODUCTION</h3></summary>
