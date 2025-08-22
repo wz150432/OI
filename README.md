@@ -83,7 +83,10 @@ From foundational concepts to advanced problem-solving methodologies, every crit
   <summary><h3>DP</h3></summary>
   
 - Linear DP
-- Knapsack DP
+- 0-1 Knapsack DP
+- Complete Knapsack
+- Multiple Knapsack
+- Group Knapsack
 - Interval DP
 - State Machine DP
 - State Compression DP
@@ -142,7 +145,7 @@ From foundational concepts to advanced problem-solving methodologies, every crit
   - Prime Numbers and Divisors
   - Euler's Totient Function
   - Sieve Method
-  - Binary Exponentiation
+  - Fast Exponentiation
   - Euclidean Algorithm
   - Chinese Remainder Theorem
   - Combinatorial Number Calculation

@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cstdio>
 
 using namespace std;
 
@@ -28,11 +28,12 @@ void sieve_euler(int n) {
 }
 
 int main() {
-    cin >> n;
+    scanf("%d", &n);
 
     sieve_euler(n);
 
-    for (int i = 1; i <= n; i ++ ) cout << phi[i] << " ";
+    for (int i = 1; i <= n; i ++ ) 
+        printf("phi(%d) = %d\n", i, phi[i]);
 
     return 0;
 }

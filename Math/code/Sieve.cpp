@@ -24,7 +24,8 @@ int main() {
 
     sieve(n);
 
-    for (int i = 1; i <= cnt; i ++ ) cout << primes[i] << endl;
+    for (int i = 1; i <= cnt; i ++ ) 
+        
 
     return 0;
 }
