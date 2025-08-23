@@ -80,8 +80,8 @@ int main() {
 
 The time complexity of Dijkstra's algorithm depends on the data structures used:
 
-- With a binary heap: O((V + E) log V), where V is the number of vertices and E is the number of edges
-- With a Fibonacci heap: O(V log V + E) (theoretically optimal but rarely used in practice)
+- With a binary heap: $O((V + E) log V)$, where V is the number of vertices and E is the number of edges
+- With a Fibonacci heap: $O(V log V + E)$ (theoretically optimal but rarely used in practice)
 
 The algorithm performs best on sparse graphs where E is much smaller than V².
 
