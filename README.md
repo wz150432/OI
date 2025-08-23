@@ -1,12 +1,12 @@
 # Contains many OI algorithms and related knowledge
 
-Dive into a comprehensive repository brimming with essential techniques, proven strategies, and in-depth knowledge that form the backbone of Informatics Olympiad success. 
+### Dive into a comprehensive repository brimming with essential techniques, proven strategies, and in-depth knowledge that form the backbone of Informatics Olympiad success. 
 $\newline$
 
-From foundational concepts to advanced problem-solving methodologies, every critical skill and insight you need to excel in OI competitions is meticulously curated here, ready to elevate your coding prowess and contest performance.
+### From foundational concepts to advanced problem-solving methodologies, every critical skill and insight you need to excel in OI competitions is meticulously curated here, ready to elevate your coding prowess and contest performance.
 
 <details>
-  <summary><h3>BASIC INTRODUCTION</h3></summary>
+  <summary><h2>BASIC INTRODUCTION</h2></summary>
   
 - STL
 - [Pair Checking](https://github.com/wz150432/OI-cpp/blob/main/Pair%20Checking.md)
@@ -16,7 +16,7 @@ From foundational concepts to advanced problem-solving methodologies, every crit
 </details>
 
 <details>
-  <summary><h3>SUNDRY</h3></summary>
+  <summary><h2>SUNDRY</h2></summary>
   
 - [Binary Search](https://github.com/wz150432/OI-cpp/blob/main/Binary%20Search.md)
 - Greedy
@@ -33,7 +33,7 @@ From foundational concepts to advanced problem-solving methodologies, every crit
 </details>
 
 <details>
-  <summary><h3>SEARCH</h3></summary>
+  <summary><h2>SEARCH</h2></summary>
   
 - BFS
 - DFS
@@ -50,7 +50,7 @@ From foundational concepts to advanced problem-solving methodologies, every crit
 </details>
 
 <details>
-  <summary><h3>DATA STRCUTURE</h3></summary>
+  <summary><h2>DATA STRCUTURE</h2></summary>
   
 - Stack And Queue
 - Monotonic Stack And Queue
@@ -80,7 +80,7 @@ From foundational concepts to advanced problem-solving methodologies, every crit
 </details>
 
 <details>
-  <summary><h3>DP</h3></summary>
+  <summary><h2>DP</h2></summary>
   
 - Linear DP
 - 0-1 Knapsack DP
@@ -103,7 +103,7 @@ From foundational concepts to advanced problem-solving methodologies, every crit
 </details>
 
 <details>
-  <summary><h3>GRAPH THEOTY</h3></summary>
+  <summary><h2>GRAPH THEOTY</h2></summary>
   
 - Introduction of Graphs and Trees
 - Topological Sort
@@ -127,7 +127,7 @@ From foundational concepts to advanced problem-solving methodologies, every crit
 </details>
 
 <details>
-  <summary><h3>COMPUTATIONAL GEOMETRY</h3></summary>
+  <summary><h2>COMPUTATIONAL GEOMETRY</h2></summary>
   
 - Basic Knowledges
 - Convex Hull
@@ -140,7 +140,7 @@ From foundational concepts to advanced problem-solving methodologies, every crit
 </details>
     
 <details>
-  <summary><h3>MATH</h3></summary>
+  <summary><h2>MATH</h2></summary>
   
   - Prime Numbers and Divisors
   - Euler's Totient Function
