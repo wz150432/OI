@@ -61,7 +61,7 @@ $\newline$
 - Binary Indexed Tree
 - Segment Tree
 - Trie
-- Treap
+- [Treap](https://github.com/wz150432/OI-cpp/blob/main/Data-Structure/Treap.md)
 - Splay
 - Mo's Algorithm
 - Persistent Segment Tree
