@@ -8,16 +8,12 @@ A heap is defined by two core properties:
 2. **Heap Property**: A strict rule governing parent-child relationships, which splits heaps into two types:  
 
    - **Max-Heap**: For every node $u$, the value of $u$ is **greater than or equal to** the values of its children. Formally:  
-     $$
-     \text{value}(u) \geq \text{value}(\text{left child of } u) \quad \text{and} \quad \text{value}(u) \geq \text{value}(\text{right child of } u)
-     $$  
-     The root holds the **maximum element** of the heap.  
+  $value(u) \geq value(\text{left child of } u) \quad \text{and} \quad value(u) \geq value(\text{right child of } u)$  
+  The root holds the **maximum element** of the heap.  
 
    - **Min-Heap**: For every node $u$, the value of $u$ is **less than or equal to** the values of its children. Formally:  
-     $$
-     \text{value}(u) \leq \text{value}(\text{left child of } u) \quad \text{and} \quad \text{value}(u) \leq \text{value}(\text{right child of } u)
-     $$  
-     The root holds the **minimum element** of the heap.  
+     $value(u) \leq value(\text{left child of } u) \quad \text{and} \quad value(u) \leq value(\text{right child of } u)$  
+     The root holds the **minimum element** of the heap.
 
 
 ## 2. Array-Based Heap Representation  

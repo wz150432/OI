@@ -52,10 +52,10 @@ $\newline$
 <details>
   <summary><h2>DATA STRCUTURE</h2></summary>
   
-- Stack And Queue
+- [Stack And Queue](https://github.com/wz150432/OI-cpp/blob/main/Data-Structure/Stack-and-queue.md)
 - Monotonic Stack And Queue
-- Heap
-- Sparse Table
+- [Heap](https://github.com/wz150432/OI-cpp/blob/main/Data-Structure/Heap.md)
+- [Sparse Table](https://github.com/wz150432/OI-cpp/blob/main/Data-Structure/Sparse-Table.md)
 - Hash Table
 - Disjoint Set Union
 - Binary Indexed Tree
@@ -83,7 +83,7 @@ $\newline$
   <summary><h2>DP</h2></summary>
   
 - Linear DP
-- 0-1 Knapsack DP
+- [0-1 Knapsack DP](https://github.com/wz150432/OI-cpp/blob/main/DP/01-Knapsack.md)
 - Complete Knapsack
 - Multiple Knapsack
 - Group Knapsack
@@ -107,7 +107,7 @@ $\newline$
   
 - Introduction of Graphs and Trees
 - Topological Sort
-- Dijkstra's Algorithm
+- [Dijkstra's Algorithm](https://github.com/wz150432/OI-cpp/blob/main/Graph-theory/Dijkstra.md)
 - Bellman Ford Algorithm
 - Floyd's Algorithm
 - Minimum Spanning Tree
@@ -143,10 +143,10 @@ $\newline$
   <summary><h2>MATH</h2></summary>
   
   - Prime Numbers and Divisors
-  - Euler's Totient Function
+  - [Euler's Totient Function](https://github.com/wz150432/OI-cpp/blob/main/Math/Euler.md)
   - Sieve Method
   - Fast Exponentiation
-  - Euclidean Algorithm
+  - [Euclidean Algorithm](https://github.com/wz150432/OI-cpp/blob/main/Math/Euclidean.md)
   - Chinese Remainder Theorem
   - Combinatorial Number Calculation
   - Gaussian Elimination
