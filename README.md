@@ -22,6 +22,7 @@ $\newline$
 - Greedy
 - [Sort](https://github.com/wz150432/OI-cpp/blob/main/Sort.md)
 - High Precision
+- Square Root Decomposition
 - Bitwise Operation
 - Prefix Sum and Difference
 - Binary Lifting
@@ -145,7 +146,7 @@ $\newline$
   - Prime Numbers and Divisors
   - [Euler's Totient Function](https://github.com/wz150432/OI-cpp/blob/main/Math/Euler.md)
   - Sieve Method
-  - Fast Exponentiation
+  - [Fast Power](https://github.com/wz150432/OI/blob/main/Math/Fast-Power.md)
   - [Euclidean Algorithm](https://github.com/wz150432/OI-cpp/blob/main/Math/Euclidean.md)
   - Chinese Remainder Theorem
   - Combinatorial Number Calculation
