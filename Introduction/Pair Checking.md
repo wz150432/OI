@@ -1,13 +1,21 @@
 # The Process of Pair Checking
 
-- ### First of all, there is a brute-force procedure that guarantees correctness, and there is also a solution whose correctness is unknown.
-- ### Then there is a file written according to this problem, used to generate random data
-- ### Write a shell script or a cpp file (not recommended) to test the correction of the solution
+When developing algorithms, ensuring correctness is paramount—especially when optimizing beyond brute-force solutions. Pair checking (or "stress testing") is a powerful technique to validate that an optimized solution behaves identically to a trusted brute-force approach across diverse inputs. Here's a step-by-step guide to implementing this process.
 
-#
 
-## I. Script writing:
-### shell script (runs on Linux systems):
+## Core Components of Pair Checking
+
+1. **Brute-force Solution**: A straightforward, guaranteed-correct implementation (may be slow but serves as the "truth source").  
+2. **Optimized Solution**: The faster solution whose correctness needs verification.  
+3. **Random Data Generator**: A program to produce diverse test cases covering edge cases and typical scenarios.  
+4. **Automation Script**: A script to repeatedly run both solutions on generated data, compare outputs, and flag discrepancies.  
+
+
+## I. Automation Scripts
+
+These scripts automate the testing loop: generating data, running both solutions, comparing results, and stopping on failures.
+
+### Shell Script (Linux)
 ```sh
 #!/bin/bash
 g++ my.cpp -std=c++11 -o my # solution
@@ -41,7 +49,7 @@ while [ $t -lt 1000000 ]; do
 done
 ```
 
-### cpp script(runs on Windows systems):
+### C++ Script (Windows)
 ```cpp
 #include <chrono>
 #include <cstdio>
@@ -75,11 +83,14 @@ int main() {
 }
 ```
 
-If you want the code above to run on Linux, you can refer to the initial code for modifications.
+*Note: The Windows script can be adapted for Linux by replacing `fc` with `diff` and adjusting executable extensions.*
 
-#
-#
-## II. Writing Random Data Files
+
+## II. Writing a Random Data Generator
+
+A robust data generator ensures test cases cover diverse scenarios (e.g., small/large inputs, edge cases like empty sets or maximum values). Below are foundational tools and examples.
+
+### Base Generator Utilities
 ```cpp
 #include<cstdlib>
 #include <ctime>
@@ -100,13 +111,13 @@ ll rll(ll n) {
 }
 
 int main() {
-    srand(time(0);
+    srand(time(0));
     
     return 0;
 }
 ```
 
-Generate an undirected graph with $n$ nodes and $n - 1$ edges.
+### Example 1: Generate a Tree (n Nodes, n-1 Edges)
 ```cpp
 int n = ri(100000);
 
@@ -117,7 +128,8 @@ for (int i = 2 ; i <= n ; i ++ )  {
 }
 ```
 
-Generate an undirected graph with $n$ nodes and $m$ edges without multiple edges and self-loops, and it must be connected.
+### Example 2: Generate a Connected Undirected Graph (n Nodes, m Edges)
+*Ensures no multiple edges or self-loops*
 ```cpp
 typedef pair<int, int> PII;
 PII e[N];
@@ -126,7 +138,7 @@ map<PII, bool> vis;
 for (int i = 1 ; i < n ; i ++ ) {
     int p = ri(i) + 1;
     e[i] = {p, i + 1};
-    vis[e[i]] = vis[{i + 1, p)] = 1;
+    vis[e[i]] = vis[{i + 1, p}] = 1;
 }
 
 for (int i = n ; i <= m ; i ++ ) {
@@ -134,11 +146,26 @@ for (int i = n ; i <= m ; i ++ ) {
     while (x == y || vis[{x, y}])
         x = ri(n) + 1, y = ri(n) + 1;
     
-    e[i] = {x, y}
-    vis[e[i] = vis[{y, x] = 1;
+    e[i] = {x, y};
+    vis[e[i]] = vis[{y, x}] = 1;
 }
 
 random_shuffle(e + 1, e + m + 1);
 for (int i = 1 ; i <= m ; i ++ ) 
     printf("%d %d\n", e[i].first, e[i].second);
 ```
+
+
+## How to Use This Workflow
+
+1. **Prepare Implementations**: Write your optimized solution (`my.cpp`) and a brute-force version (`bf.cpp`).  
+2. **Build the Generator**: Create `rand.cpp` to produce test cases relevant to your problem (e.g., graphs, arrays, or custom structures).  
+3. **Run the Script**: Execute the automation script. It will:  
+   - Compile all programs.  
+   - Generate test cases.  
+   - Run both solutions on each case.  
+   - Compare outputs. If they differ, it stops and shows the failing input.  
+4. **Debug**: Use the failing input to identify where your optimized solution deviates from the brute-force result.  
+
+
+This approach is invaluable for competitive programming, algorithm development, or any scenario where correctness must be verified across countless edge cases. By automating the process, you can test thousands of cases efficiently, ensuring your solution is robust.
