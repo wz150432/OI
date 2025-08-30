@@ -1,28 +1,27 @@
-# Mastering Binary Search: The Efficient O(logn) Search Algorithm
+# 二分
 
-Binary search stands as one of the most fundamental and efficient algorithms in programming, beloved for its **O(logn) time complexity**—a game-changer compared to linear search’s O(n) when dealing with sorted datasets. Whether you’re hunting for a specific value in an array or solving complex optimization problems, binary search streamlines the process by repeatedly halving the search interval. In this blog, we’ll break down its two core variants—integer binary search and real number binary search—and walk through their practical implementations, focusing on avoiding common pitfalls.
+## 1. 核心原理
 
+二分查找的核心原理很简单：对于**有序数据集**，您可以通过单次检查排除一半剩余元素。通过将 "中点" 值与目标值或问题特定条件进行比较，您可以将搜索空间缩小到左半部分或右半部分。这种对半分割的过程持续进行，直到找到答案或穷尽搜索区间。
 
-## The Core of Binary Search: Why It Works
-At its heart, binary search relies on a simple principle: for a **sorted dataset**, you can eliminate half the remaining elements with a single check. By comparing a "midpoint" value to your target or a problem-specific condition, you narrow the search space to either the left or right half. This halving process continues until you find the answer or exhaust the search interval—resulting in logarithmic time complexity that scales exceptionally well for large datasets (e.g., searching through 1 million elements takes just ~20 steps).
+## 2. 整数二分查找
 
+整数二分查找的两个关键细节：
 
-## I. Integer Binary Search: For Discrete Sorted Data
-Integer binary search is used when working with discrete, sorted values—think arrays of integers, indices, or counts. The key to success here lies in two critical details:  
-1. Writing a **problem-specific check function** (to determine if a midpoint is "valid" for your goal).  
-2. Choosing the correct midpoint calculation to avoid infinite loops (a common trap for beginners).  
+1. 编写 **问题特定的检查函数**（用于确定中点值是否对您的目标 "有效"）
+2. 选择正确的中点计算方式以避免无限循环（初学者的常见陷阱）
 
-The check function varies by use case: it might verify if a value at the midpoint meets a requirement (e.g., "is this element greater than the target?" or "can we complete the task with this number of resources?"). Once defined, we split the search interval `[l, r]` into two parts—here are the two most common and reliable ways to do that.
+### 变体 1：寻找最大有效值
 
+此变体适用于需要找到满足检查函数的**最大值**的场景（例如："在有序数组中找小于等于 `target` 的最大数"、"最多能分配多少资源仍满足条件"）。
 
-### Variant 1: Finding the Largest Valid Value  
-This variant is for scenarios where you need the **largest value** that satisfies your check function. We split the interval `[l, r]` into `[l, mid - 1]` (invalid half) and `[mid, r]` (valid half, if mid passes the check).  
+我们将区间`[l, r]`分成两部分：
 
-#### Critical Note: Midpoint Calculation  
-To avoid infinite loops—especially when the interval shrinks to `l + 1 = r`—we calculate the midpoint as `(l + r + 1) >> 1` (a bitwise shortcut for `(l + r + 1) / 2`) instead of `(l + r) >> 1`. Here’s why:  
-If you use `(l + r) >> 1` when `l = 2` and `r = 3`, mid becomes 2. If the check function returns `true` (meaning 2 is valid and larger values might also be valid), setting `l = mid` leaves the interval unchanged (`l = 2`, `r = 3`), causing an infinite loop. Adding 1 to the midpoint formula fixes this, ensuring the interval always shrinks.  
+- `[l, mid - 1]`（无效的一半）
+- `[mid, r]`（有效的一半）
 
-#### Implementation Code  
+#### 代码实现：
+
 ```cpp
 int binary_search1() {
     int l = 1, r = n;
@@ -31,19 +30,29 @@ int binary_search1() {
         if (check(mid)) l = mid;
         else r = mid - 1;
     }
-
     return r;
 }
 ```
 
+#### 关键解析：为什么中点要加 1？
 
-### Variant 2: Finding the Smallest Valid Value  
-This variant targets the **smallest value** that passes the check function. We split the interval `[l, r]` into `[l, mid]` (valid half, if mid passes) and `[mid + 1, r]` (invalid half).  
+这是避免无限循环的核心！假设区间缩小到`l = 2，r = 3`
 
-#### Critical Note: Midpoint Calculation  
-Here, we use `mid = (l + r) >> 1` (no `+1`). Using `(l + r + 1) >> 1` would risk infinite loops: if `l = 2` and `r = 3`, mid becomes 3. If the check function returns `true` (3 is valid, but smaller values might also be valid), setting `r = mid` keeps the interval `[2, 3]` unchanged. Sticking to `(l + r) >> 1` ensures the interval shrinks correctly.  
+- 若用`(l + r) >> 1`计算 `mid`，结果为 $2$ ；若`check(2)`返回 $true$（$2$ 是有效解），则`l = 2`，区间仍为`[2,3]`，循环永远无法结束；
+- 用`(l + r + 1) >> 1`计算 `mid`，结果为 $3$ ；若`check(3)`返回 $true$，则`l = 3`，此时`l = r`，循环正常结束。
 
-#### Implementation Code  
+### 变体 2：寻找最小有效值
+
+此变体目标是找到通过检查函数的**最小值**（例如："在有序数组中找大于等于 target 的最小数"、"最少需要多少资源能完成任务"）。
+
+我们将区间`[l, r]`分成两部分：
+
+- `[mid + 1, r]`（无效的一半）
+
+- `[l, mid]`（有效的一半）
+
+#### 代码实现：
+
 ```cpp
 int binary_search2() {
     int l = 1, r = n;
@@ -52,21 +61,24 @@ int binary_search2() {
         if (check(mid)) r = mid;
         else l = mid + 1;
     }
-
     return r;
 }
 ```
 
+#### 关键解析：为什么中点不加 1？
 
-## II. Real Number Binary Search: For Continuous Ranges
-Real number binary search is used when the answer lies in a **continuous range** (e.g., floating-point values like temperatures, distances, or square roots). Unlike integer binary search, we don’t rely on discrete indices—instead, we narrow the interval until it’s small enough to meet the problem’s precision requirements.
+同样以`l = 2，r = 3`为例
 
+- 若用`(l + r + 1) >> 1`计算 `mid`，结果为 3；若`check(3)`返回 $true$，则`r = 3`，区间仍为`[2, 3]`，陷入无限循环；
 
-### Key Step: Defining Precision  
-The first rule of real number binary search is to set a **precision (eps)** that’s slightly stricter than the problem’s requirement. For example, if the problem asks for an answer accurate to 6 decimal places, use `eps = 1e-8` (two extra decimal places). This ensures rounding errors don’t affect the final result—we treat any value beyond the `eps` threshold as negligible (effectively zero).
+- 用`(l + r) >> 1`计算 mid，结果为 $2$；若`check(2)`返回 $false$（$2$ 无效），则`l = 3`，`l = r`，循环正常结束。
 
+## 3. 实数二分查找
 
-### Implementation Code  
+实数二分查找用于答案位于**连续范围**的情况（例如，温度、距离或平方根等浮点值）。与整数二分不同，我们不依赖离散索引 —— 而是缩小区间直到足够小以满足问题的精度要求。
+
+### 代码实现：
+
 ```cpp
 double binary_search3() {
     double eps = 1e-8;
@@ -80,28 +92,6 @@ double binary_search3() {
 }
 ```
 
-#### How It Works:  
-- We start with a range `[l, r]` (adjusted to fit your problem—e.g., `[-1e9, 1e9]` for large values).  
-- In each iteration, we calculate `mid` as the average of `l` and `r` (no bitwise shifts here, since we’re working with doubles).  
-- The check function determines if `mid` is on the "valid" side of the range: if yes, we move `l` to `mid`; if not, we move `r` to `mid`.  
-- We stop when the interval `r - l` is smaller than `eps`—at this point, `l` (or `r`) is sufficiently close to the true answer.
+#### 关键解析：精度 eps 的设置
 
-
-## Common Pitfalls to Avoid
-1. **Forgetting Sorted Data**: Binary search only works on sorted datasets. Always ensure your data is sorted (ascending or descending) before starting.  
-2. **Incorrect Midpoint Calculation**: As we saw, using `(l + r) >> 1` for the "largest valid" variant (or `+1` for the "smallest valid" variant) causes infinite loops. Memorize the two variants’ midpoint rules.  
-3. **Ignoring Precision in Real Number Search**: Using too loose a precision (e.g., `1e-6` for a problem requiring `1e-8`) leads to incorrect answers. Always add 2 extra decimal places to `eps`.  
-4. **Vague Check Functions**: The check function is the backbone of binary search. If it’s unclear (e.g., "does this midpoint get me close to the target?"), your algorithm will fail. Define it to answer a clear yes/no question about validity.
-
-
-## When to Use Binary Search
-Binary search isn’t just for "finding a value in an array"—it’s a versatile tool for:  
-- **Optimization Problems**: Finding the minimum/maximum value that satisfies a condition (e.g., "the maximum number of students that can fit in a classroom").  
-- **Range Queries**: Determining the first/last occurrence of a value in a sorted array.  
-- **Mathematical Problems**: Calculating square roots, cube roots, or solving equations (e.g., finding x where `x² = 25`).  
-
-
-## Final Thoughts
-Binary search is a cornerstone of efficient programming, and mastering its two variants will save you time and effort across countless projects. The key to success is understanding **how to split the interval** and **why the midpoint calculation matters**—once you nail these, you’ll avoid infinite loops and build reliable algorithms.  
-
-Start practicing with simple problems (e.g., finding a target in a sorted array) and gradually move to complex optimization tasks. With time, binary search will become second nature—and you’ll wonder how you ever coded without it!
+这是实数二分的核心！如果题目要求答案精确到`1e-6`（小数点后 $6 $位），若设`eps = 1e-6`，可能因浮点误差导致最终结果四舍五入错误；设`eps = 1e-8`（多 $2$ 位），能确保区间缩小到足够小，最终结果更可靠

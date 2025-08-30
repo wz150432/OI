@@ -1,143 +1,161 @@
-# A Practical Guide to Heaps: Concepts, Implementations, and Code  
-Heaps are a foundational **complete binary tree-based data structure** optimized for efficient access to the "extreme" element (maximum or minimum). They power algorithms like heap sort and priority queues, and their simplicity makes them a staple in coding interviews and real-world applications. This post breaks down heap fundamentals, covers both max-heaps and min-heaps, and includes a reusable C++ implementation.
+# 堆的实用指南：概念、实现与代码
 
+堆是一种基于**完全二叉树**的基础数据结构，其优化目标是高效访问"极值"元素（最大值或最小值）。堆是堆排序、优先队列等算法的核心，且结构简洁，是编码面试与实际应用中的必备知识点。本文将拆解堆的基础原理，涵盖大根堆与小根堆，并提供可复用的C++实现代码。
 
-## 1. What Is a Heap?  
-A heap is defined by two core properties:  
-1. **Complete Binary Tree**: All levels are fully filled except possibly the last, which is left-aligned. This allows efficient array-based storage (no pointers needed).  
-2. **Heap Property**: A strict rule governing parent-child relationships, which splits heaps into two types:  
+## 1. 什么是堆？
 
-   - **Max-Heap**: For every node $u$, the value of $u$ is **greater than or equal to** the values of its children. Formally:  
-  $value(u) \geq value(\text{left child of } u) \quad \text{and} \quad value(u) \geq value(\text{right child of } u)$  
-  The root holds the **maximum element** of the heap.  
+堆由两个核心性质定义：
 
-   - **Min-Heap**: For every node $u$, the value of $u$ is **less than or equal to** the values of its children. Formally:  
-     $value(u) \leq value(\text{left child of } u) \quad \text{and} \quad value(u) \leq value(\text{right child of } u)$  
-     The root holds the **minimum element** of the heap.
+1. **完全二叉树性质**：除最后一层外，所有层均被完全填满；最后一层的节点从左到右依次排列（左对齐）。这一性质使得堆可通过数组高效存储（无需指针）。
+2. **堆序性质**：用于约束父子节点间关系的严格规则，据此可将堆分为两类：
 
+   - **大根堆（Max-Heap）**：对任意节点$u$，其值**大于或等于**其左右子节点的值。形式化表示为：
+     $value(u) \geq value(\text{u的左子节点}) \quad 且 \quad value(u) \geq value(\text{u的右子节点})$
+     堆的根节点存储堆中的**最大值**。
 
-## 2. Array-Based Heap Representation  
-Since heaps are complete binary trees, we can store them in arrays using **1-based indexing** (simplifies parent/child calculations). For a node at index $i$:  
-- Left child index: $2i$  
-- Right child index: $2i + 1$  
-- Parent index: $\lfloor i/2 \rfloor$ (integer division) 
+   - **小根堆（Min-Heap）**：对任意节点$u$，其值**小于或等于**其左右子节点的值。形式化表示为：
+     $value(u) \leq value(\text{u的左子节点}) \quad 且 \quad value(u) \leq value(\text{u的右子节点})$
+     堆的根节点存储堆中的**最小值**。
 
-## 3. Core Heap Operations  
-All heap operations rely on two helper functions to restore the heap property after modifications: `down()` (adjust a node downward) and `up()` (adjust a node upward). We’ll explain both for max-heaps and min-heaps.
+## 2. 堆的数组表示法
 
+由于堆是完全二叉树，可采用**1-基索引** 将其存储在数组中（该方式能简化父子节点索引的计算）。对于索引为$i$的节点：
 
-### 3.1 Helper 1: `down(int u)` – Fix a Node by Moving It Down  
-Use `down()` when a node violates the heap property by being "too small" (max-heap) or "too large" (min-heap). It swaps the node with its appropriate child and recurses until the property is restored.  
+- 左子节点索引：$2i$
+- 右子节点索引：$2i + 1$
+- 父节点索引：$\lfloor i/2 \rfloor$
 
-#### Max-Heap `down()` Logic:  
-1. Let $\text{largest} = u$ (track the index of the largest value among $u$ and its children).  
-2. If the left child exists and is larger than $\text{largest}$, update $\text{largest}$ to the left child’s index.  
-3. If the right child exists and is larger than $\text{largest}$, update $\text{largest}$ to the right child’s index.  
-4. If $\text{largest} \neq u$, swap the values at $u$ and $\text{largest}$, then call `down(largest)` to fix the new position.  
+## 3. 堆的核心操作
 
-#### Min-Heap `down()` Logic:  
-Replace "largest" with "smallest" and compare for smaller values instead:  
-1. Let $\text{smallest} = u$.  
-2. If the left child exists and is smaller than $\text{smallest}$, update $\text{smallest}$.  
-3. If the right child exists and is smaller than $\text{smallest}$, update $\text{smallest}$.  
-4. Swap and recurse if $\text{smallest} \neq u$.  
+堆的所有操作均依赖两个辅助函数，用于在堆结构修改后恢复堆序性质：`down()`（将节点向下调整）和`up()`（将节点向上调整）。以下分别针对大根堆与小根堆进行说明。
 
+### 3.1 辅助函数1：`down(int u)`——向下调整节点以修复堆序
 
-### 3.2 Helper 2: `up(int u)` – Fix a Node by Moving It Up  
-Use `up()` when a node violates the heap property by being "too large" (max-heap) or "too small" (min-heap). It swaps the node with its parent and repeats until the property is restored.  
+当节点因"值过小"（大根堆中）或"值过大"（小根堆中）违反堆序性质时，使用`down()`函数。该函数会将节点与合适的子节点交换，并递归调整，直至堆序性质恢复。
 
-#### Max-Heap `up()` Logic:  
-While the node has a parent ($u > 1$) and the node’s value is larger than its parent’s value:  
-1. Swap the node with its parent.  
-2. Update $u$ to the parent’s index ($u = \lfloor u/2 \rfloor$).  
+#### 大根堆的`down()`逻辑：
 
-#### Min-Heap `up()` Logic:  
-While the node has a parent ($u > 1$) and the node’s value is smaller than its parent’s value:  
-1. Swap the node with its parent.  
-2. Update $u$ to the parent’s index.  
+1. 初始化$\text{largest} = u$（用于追踪$u$及其子节点中值最大的节点索引）。
+2. 若左子节点存在（$2i \leq$ 堆大小）且左子节点值大于$\text{largest}$对应的节点值，则将$\text{largest}$更新为左子节点索引。
+3. 若右子节点存在（$2i + 1 \leq$ 堆大小）且右子节点值大于$\text{largest}$对应的节点值，则将$\text{largest}$更新为右子节点索引。
+4. 若$\text{largest} \neq u$（说明$u$不是最大值节点），交换$u$与$\text{largest}$对应的节点值，并调用`down(largest)`继续调整新位置的节点。
 
+#### 小根堆的`down()`逻辑：
 
-### 3.3 Key Operations (Max-Heap & Min-Heap)  
-All operations run in $O(\log n)$ time, as they traverse the heap’s height ($\log n$ for a complete binary tree with $n$ nodes).  
+将"追踪最大值"改为"追踪最小值"，比较逻辑变为"小于"：
 
-| Operation       | Max-Heap Steps                                                                 | Min-Heap Steps                                                                 |
-|-----------------|--------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| `push(x)`       | 1. Append $x$ to the end of the array ($a[++s] = x$).<br>2. Call `up(s)` to fix the heap property. | 1. Append $x$ to the end of the array ($a[++s] = x$).<br>2. Call `up(s)` to fix the heap property. |
-| `pop()`         | 1. Swap the root ($a[1]$) with the last element ($a[s]$).<br>2. Shrink the heap ($s--$).<br>3. Call `down(1)` to fix the heap property. | 1. Swap the root ($a[1]$) with the last element ($a[s]$).<br>2. Shrink the heap ($s--$).<br>3. Call `down(1)` to fix the heap property. |
-| `top()`         | Return the root value ($a[1]$) – the maximum element.                     | Return the root value ($a[1]$) – the minimum element.                     |
+1. 初始化$\text{smallest} = u$（用于追踪$u$及其子节点中值最小的节点索引）。
+2. 若左子节点存在且值小于$\text{smallest}$对应的节点值，更新$\text{smallest}$为左子节点索引。
+3. 若右子节点存在且值小于$\text{smallest}$对应的节点值，更新$\text{smallest}$为右子节点索引。
+4. 若$\text{smallest} \neq u$，交换节点值并递归调用`down(smallest)`。
 
+### 3.2 辅助函数2：`up(int u)`——向上调整节点以修复堆序
 
-## 4. C++ Heap Implementation (Template)  
-Below is a generic implementation that supports max-heaps. It uses templates to work with any comparable data type (e.g., `int`, `double`).  
+当节点因"值过大"（大根堆中）或"值过小"（小根堆中）违反堆序性质时，使用`up()`函数。该函数会将节点与父节点交换，并重复调整，直至堆序性质恢复。
+
+#### 大根堆的`up()`逻辑：
+
+当节点存在父节点（$u > 1$，因采用1基索引，根节点索引为1）且节点值大于父节点值时，循环执行：
+
+1. 交换当前节点与父节点的值。
+2. 将$u$更新为父节点的索引（$u = \lfloor u/2 \rfloor$）。
+
+#### 小根堆的`up()`逻辑：
+
+当节点存在父节点（$u > 1$）且节点值小于父节点值时，循环执行：
+
+1. 交换当前节点与父节点的值。
+2. 将$u$更新为父节点的索引（$u = \lfloor u/2 \rfloor$）。
+
+### 3.3 堆的关键操作（大根堆 vs 小根堆）
+
+所有操作的时间复杂度均为$O(\log n)$，因为操作仅需遍历堆的高度（含$n$个节点的完全二叉树高度为$\log n$）。
+
+| 操作      | 大根堆操作步骤                                               | 小根堆操作步骤                                               |
+| --------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `push(x)` | 1. 将$x$追加到数组末尾（$a[++s] = x$，$s$为堆大小）。<br>2. 调用`up(s)`修复堆序。 | 1. 将$x$追加到数组末尾（$a[++s] = x$）。<br>2. 调用`up(s)`修复堆序。 |
+| `pop()`   | 1. 交换根节点（$a[1]$）与最后一个节点（$a[s]$）。<br>2. 缩小堆大小（$s--$）。<br>3. 调用`down(1)`修复堆序。 | 1. 交换根节点（$a[1]$）与最后一个节点（$a[s]$）。<br>2. 缩小堆大小（$s--$）。<br>3. 调用`down(1)`修复堆序。 |
+| `top()`   | 返回根节点值（$a[1]$）——即堆中的最大值。                     | 返回根节点值（$a[1]$）——即堆中的最小值。                     |
+
+## 4. C++堆实现（模板类）
+
+以下是支持大根堆的通用实现，通过模板类适配任意可比较的数据类型（如`int`、`double`）。
 
 ```cpp
 #include <iostream>
 
 using namespace std;
 
-const int N = 1e5 + 10;
-
-int n;
+const int N = 1e5 + 10;  // 堆的最大容量（可根据需求调整）
 
 template<typename T>
 struct Heap {
-    int s;
-    T a[N];
+    int s;          // 堆的当前大小（初始为0）
+    T a[N];         // 存储堆元素的数组（1基索引）
 
+    // 向下调整节点
     void down(int u) {
-        int t = u;
+        int t = u;  // t追踪当前节点及其子节点中的最大值节点索引
+        // 比较左子节点
         if (2 * u <= s && a[2 * u] > a[t]) t = 2 * u;
+        // 比较右子节点
         if (2 * u + 1 <= s && a[2 * u + 1] > a[t]) t = 2 * u + 1;
+        // 若当前节点不是最大值节点，交换并递归调整
         if (t != u) {
             swap(a[u], a[t]);
             down(t);
         }
     }
 
+    // 向上调整节点
     void up(int u) {
-        int t = u;
-        while (t > 1 && a[t / 2] < a[t]) {
-            swap(a[t / 2], a[t]);
-            t /= 2;
+        // 当节点有父节点且值大于父节点时，循环向上调整
+        while (u > 1 && a[u / 2] < a[u]) {
+            swap(a[u / 2], a[u]);
+            u /= 2;  // 移动到父节点索引
         }
     }
 
+    // 插入元素x
     void push(T x) {
-        a[ ++ s] = x;
-        up(s);
+        a[ ++ s] = x;  // 追加到数组末尾
+        up(s);       // 向上调整新节点
     }
 
+    // 删除堆顶元素（最大值）
     void pop() {
-        if (s) {
-            swap(a[1], a[s -- ]);
-            down(1);
+        if (s) {  // 堆非空时操作
+            swap(a[1], a[s -- ]);  // 交换根节点与尾节点，缩小堆大小
+            down(1);             // 向下调整新根节点
         }
     }
 
+    // 获取堆顶元素（最大值）
     T top() {
         return a[1];
     }
 };
 
+// 定义一个int类型的大根堆
 Heap<int> h;
 
 int main() {
-    cin >> n;
-    
+    int n;
+    cin >> n;  // 输入操作次数
+
     while (n -- ) {
         int opt, x;
-        cin >> opt;
+        cin >> opt;  // 输入操作类型（1：插入，2：删除，其他：查询堆顶）
         if (opt == 1) {
             cin >> x;
             h.push(x);
-        } 
-        else if (opt == 2) h.pop();
-        else cout << h.top() << endl;
+        } else if (opt == 2) {
+            h.pop();
+        } else {
+            cout << h.top() << endl;
+        }
     }
 
     return 0;
 }
 ```
-
-
-## 5. Recommended Exercises

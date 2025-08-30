@@ -1,54 +1,60 @@
-# Sparse Table: Efficient Range Queries with O(1) Lookup  
+# 稀疏表（Sparse Table）：通过 O(1) 查询实现高效区间查询
 
-In competitive programming and data analysis, we often need to answer range queries (like "what's the maximum value in this interval?") efficiently. While segment trees and binary indexed trees (Fenwick trees) are popular, the **Sparse Table** data structure stands out for its simplicity and speed—offering $O(1)$ query time after $O(n log n)$ preprocessing.  
+在竞争性编程中，我们经常需要高效地回答区间查询（例如“这个区间内的最大值是多少？”）。虽然线段树和树状数组很流行，但 **稀疏表**（Sparse Table）数据结构因其简洁性和速度而脱颖而出——它在 $O(n \log n)$ 的预处理时间后，能够提供 $O(1)$ 的查询时间。
 
-Let’s dive into how Sparse Tables work, their implementation, and why they’re a go-to for static arrays (arrays that don’t change after initialization).  
+让我们深入了解稀疏表的工作原理、实现方法，以及为什么它适用于静态数组（初始化后不再更改的数组）。
 
+## 什么是稀疏表？
 
-## What Is a Sparse Table?  
-A Sparse Table is a precomputed table that allows us to answer range queries (e.g., range maximum, minimum, or gcd) in constant time. It’s built on the idea of **precomputing answers for intervals of length $2^j$** and combining these precomputed results to answer arbitrary range queries.  
+稀疏表是一个预先计算好的表格，允许我们在常数时间内回答区间查询（例如区间最大值、最小值或最大公约数）。它的核心思想是**预先计算长度为 $2^j$ 的区间的答案**，并通过组合这些预先计算的结果来回答任意的区间查询。
 
-### Key Idea:  
-For any interval $[l, r]$, we can find the largest $k$ such that $2^k \leq (r - l + 1)$. The interval $[l, r]$ can then be covered by two overlapping intervals of length $2^k$:  
-- One starting at $l$ (covers $[l, l + 2^k - 1]$)  
-- One ending at $r$ (covers $[r - 2^k + 1, r]$)  
+### 核心思想：
 
-The answer for $[l, r]$ is the combination (e.g., max, min) of the precomputed answers for these two intervals.  
+对于任意区间 $[l, r]$，我们可以找到最大的 $k$，使得 $2^k \leq (r - l + 1)$。那么，区间 $[l, r]$ 可以被两个长度为 $2^k$ 的重叠区间覆盖：
 
+- 一个起始于 $l$（覆盖 $[l, l + 2^k - 1]$）
+- 一个结束于 $r$（覆盖 $[r - 2^k + 1, r]$）
 
-## How to Build a Sparse Table  
-Let’s focus on **range maximum queries (RMQ)** as an example. The steps generalize to other idempotent operations (operations where applying them multiple times doesn’t change the result, like min or gcd).  
+区间 $[l, r]$ 的答案就是这两个区间预先计算答案的组合（例如取最大值、最小值）。
 
+## 如何构建稀疏表
 
-### 1. Preprocessing: Building the Table  
-We define a 2D array $f[i][j]$, where:  
-- $i$ is the starting index of the interval.  
-- $j$ represents the length of the interval as $2^j$.  
+我们以**区间最值查询（RMQ）**  中的最大值为例。其步骤可以推广到其他幂等操作（多次应用不会改变结果的操作，如最大公约数等）。
 
-Thus, $f[i][j]$ stores the maximum value in the interval $[i, i + 2^j - 1]$.  
+### 1. 预处理：构建表格
 
-#### Recurrence Relation:  
-- For $j = 0$ (interval length $2^0 = 1$): $f[i][0] = a[i]$ (the value itself).  
-- For $j > 0$: Split the interval $[i, i + 2^j - 1]$ into two intervals of length $2^{j-1}$:  
+我们定义一个二维数组 $f[i][j]$，其中：
+
+- $i$ 是区间的起始索引。
+- $j$ 表示区间的长度为 $2^j$。
+
+因此，$f[i][j]$ 存储了区间 $[i, i + 2^j - 1]$ 中的最大值。
+
+#### 递推关系：
+
+- 对于 $j = 0$（区间长度 $2^0 = 1$）：$f[i][0] = a[i]$（元素本身的值）。
+- 对于 $j > 0$：将区间 $[i, i + 2^j - 1]$ 分成两个长度为 $2^{j-1}$ 的区间：
   $
   f[i][j] = \max\left(f[i][j-1],\ f\left[i + 2^{j-1}\right][j-1]\right)
-  $ 
+  $
 
+### 2. 查询：回答区间最大值查询
 
-### 2. Querying: Answering Range Maximum Queries  
-To find the maximum in $[l, r]$:  
-1. Compute $k = \lfloor \log_2(r - l + 1) \rfloor$ (the largest power of 2 fitting in the interval length).  
-2. The result is the maximum of the two overlapping intervals:  
+要查找 $[l, r]$ 中的最大值：
+
+1. 计算 $k = \lfloor \log_2(r - l + 1) \rfloor$（能够容纳在区间长度内的最大的 2 的幂）。
+2. 结果是两个重叠区间的最大值：
    $
    \max\left(f[l][k],\ f\left[r - 2^k + 1\right][k]\right)
-   $  
+   $
 
+## 完整实现（C++）
 
-## Full Implementation (C++)  
-Here’s a complete Sparse Table implementation for range maximum queries:  
+以下是区间最大值查询的完整稀疏表实现：
 
 ```cpp
 #include <iostream>
+#include <cmath> // 需要包含cmath库以使用log函数
 
 using namespace std;
 
@@ -68,8 +74,8 @@ int main() {
 
     for (int i = 1; i <= n; i ++ ) cin >> a[i];
 
-    int k = floor(log(n) / log(2));
-    for (int j = 0 ; j <= k; j ++ )
+    int k_val = floor(log(n) / log(2)); // 重命名以避免冲突
+    for (int j = 0 ; j <= k_val; j ++ )
         for (int i = 1; i + (1 << j) - 1 <= n; i ++ ) {
             if (!j) f[i][j] = a[i];
             else f[i][j] = max(f[i][j - 1], f[i + (1 << (j - 1))][j - 1]);
@@ -87,45 +93,44 @@ int main() {
 }
 ```
 
+## 时间复杂度分析
 
-## Time Complexity Analysis  
-- **Preprocessing**: $O(n \log n)$. We fill a table of size $n \times \log n$, with each entry computed in $O(1)$ time.  
-- **Query**: $O(1)$. Each query combines two precomputed intervals, requiring constant time.  
+- **预处理**：$O(n \log n)$。我们填充了一个大小为 $n \times \log n$ 的表格，每个条目的计算时间为 $O(1)$。
+- **查询**：$O(1)$。每个查询组合两个预先计算好的区间，只需要常数时间。
 
+## 何时使用稀疏表
 
-## When to Use Sparse Tables  
-Sparse Tables shine in scenarios where:  
-- The array is **static** (no updates after initialization). They are not efficient for dynamic arrays (use segment trees instead).  
-- Queries are **idempotent** (e.g., max, min, gcd, lcm). For non-idempotent operations (e.g., sum), overlapping intervals would lead to incorrect results.  
-- You need **fast query times** $O(1)$ and can afford $O(n log n)$ preprocessing.  
+稀疏表在以下场景中表现出色：
 
+- 数组是**静态的**（初始化后没有更新）。对于动态数组，它的效率不高（应使用线段树）。
+- 查询是**幂等的**（例如最大值、最小值、最大公约数、最小公倍数）。对于非幂等操作（例如求和），重叠的区间会导致不正确的结果。
+- 你需要**快速的查询时间** $O(1)$，并且可以承受 $O(n \log n)$ 的预处理时间。
 
-## Advantages Over Other Structures  
-| Structure       | Preprocessing Time | Query Time | Handles Updates? |  
-|-----------------|--------------------|------------|------------------|  
-| Sparse Table    | $O(n log n)$        | $O(1)$       | No               |  
-| Segment Tree    | $O(n)$               | $O(log n)$   | Yes              |  
-| Naive Approach  | $O(1)$               | $O(n)$       | N/A              |  
+## 与其他结构的优势比较
 
+| 结构                  | 预处理时间    | 查询时间    | 支持更新？ |
+| --------------------- | ------------- | ----------- | ---------- |
+| 稀疏表 (Sparse Table) | $O(n \log n)$ | $O(1)$      | 否         |
+| 线段树 (Segment Tree) | $O(n)$        | $O(\log n)$ | 是         |
+| 朴素方法 (Naive)      | $O(1)$        | $O(n)$      | 不适用     |
 
-## Example Walkthrough  
-Let’s say we have an array $a = [3, 1, 4, 2, 5]$.  
+## 示例演练
 
-1. **Preprocessing**:  
-   - $j = 0$ (length 1): $f[i][0] = a[i] \implies [3, 1, 4, 2, 5]$  
-   - $j = 1$ (length 2): $f[i][1] = \max(a[i], a[i + 1]) \implies [3, 4, 4, 5]$  
-   - $j = 2$ (length 4): $f[i][2] = \max(f[i][1], f[i + 2][1]) \implies [4, 5]$  
+假设我们有一个数组 $a = [3, 1, 4, 2, 5]$。
 
-2. **Query $[1, 4]$** (values [3, 1, 4, 2]):  
-   - Length = 4, so $k = \log_2(4) = 2$.  
-   - Result = $\max(f[1][2], f[4 - 4 + 1][2]) = \max(f[1][2], f[1][2]) = 4$.  
+1.  **预处理**：
+    - $j = 0$（长度 1）：$f[i][0] = a[i] \implies [3, 1, 4, 2, 5]$
+    - xxxxxxxxxx76 1#include <iostream>2​3using namespace std;4​5const int N = 1e5 + 10;  // 堆的最大容量（可根据需求调整）6​7template<typename T>8struct Heap {9    int s;          // 堆的当前大小（初始为0）10    T a[N];         // 存储堆元素的数组（1基索引）11​12    // 向下调整节点13    void down(int u) {14        int t = u;  // t追踪当前节点及其子节点中的最大值节点索引15        // 比较左子节点16        if (2 * u <= s && a[2 * u] > a[t]) t = 2 * u;17        // 比较右子节点18        if (2 * u + 1 <= s && a[2 * u + 1] > a[t]) t = 2 * u + 1;19        // 若当前节点不是最大值节点，交换并递归调整20        if (t != u) {21            swap(a[u], a[t]);22            down(t);23        }24    }25​26    // 向上调整节点27    void up(int u) {28        // 当节点有父节点且值大于父节点时，循环向上调整29        while (u > 1 && a[u / 2] < a[u]) {30            swap(a[u / 2], a[u]);31            u /= 2;  // 移动到父节点索引32        }33    }34​35    // 插入元素x36    void push(T x) {37        a[ ++ s] = x;  // 追加到数组末尾38        up(s);       // 向上调整新节点39    }40​41    // 删除堆顶元素（最大值）42    void pop() {43        if (s) {  // 堆非空时操作44            swap(a[1], a[s -- ]);  // 交换根节点与尾节点，缩小堆大小45            down(1);             // 向下调整新根节点46        }47    }48​49    // 获取堆顶元素（最大值）50    T top() {51        return a[1];52    }53};54​55// 定义一个int类型的大根堆56Heap<int> h;57​58int main() {59    int n;60    cin >> n;  // 输入操作次数61​62    while (n -- ) {63        int opt, x;64        cin >> opt;  // 输入操作类型（1：插入，2：删除，其他：查询堆顶）65        if (opt == 1) {66            cin >> x;67            h.push(x);68        } else if (opt == 2) {69            h.pop();70        } else {71            cout << h.top() << endl;72        }73    }74​75    return 0;76}cpp
+    - $j = 2$（长度 4）：$f[i][2] = \max(f[i][1], f[i + 2][1]) \implies [4, 5]$ （对于 i=1 和 i=2）
 
+2.  **查询 $[1, 4]$**（值 [3, 1, 4, 2]）：
+    - 长度 = 4，所以 $k = \log_2(4) = 2$。
+    - 结果 = $\max(f[1][2], f[4 - 4 + 1][2]) = \max(f[1][2], f[1][2]) = 4$。
 
-## Key Takeaways  
-- Sparse Tables are ideal for static arrays and idempotent range queries.  
-- Preprocessing takes $O(n log n)$ time, but queries are $O(1)$.  
-- The core idea is precomputing intervals of length $2^j$ and combining them to answer arbitrary ranges.  
+## 关键要点
 
-Next time you need to handle range max/min queries on a static array, give Sparse Tables a try—they’re simple to implement and blazingly fast!
+- 稀疏表非常适合静态数组和幂等区间查询。
+- 预处理需要 $O(n \log n)$ 时间，但查询是 $O(1)$。
+- 其核心思想是预先计算长度为 $2^j$ 的区间，并将它们组合起来以回答任意范围的查询。
 
-## Recomended Exercises 
+下次你需要处理静态数组上的区间最大/最小值查询时，可以尝试使用稀疏表——它实现简单且速度极快！

@@ -1,55 +1,56 @@
-# The Process of Pair Checking
+# 对拍
 
-When developing algorithms, ensuring correctness is paramount—especially when optimizing beyond brute-force solutions. Pair checking (or "stress testing") is a powerful technique to validate that an optimized solution behaves identically to a trusted brute-force approach across diverse inputs. Here's a step-by-step guide to implementing this process.
+在竞赛过程中，确保正确性至关重要——特别是在优化超越暴力解法时。对拍是一种强大的技术，用于验证优化解决方案在各种输入下与可信的暴力解法行为一致，还可以获得数据借此debug。以下是实施此流程的逐步流程。
 
+## 对拍的核心要素
 
-## Core Components of Pair Checking
+1. **暴力代码**：直接、保证正确的实现（可能较慢，但作为"正确答案的来源"）
+2. **正解**：需要验证正确性的更快解决方案
+3. **随机数据生成器**：生成涵盖边界情况和典型场景的多样化测试用例的程序
+4. **自动化脚本**：重复运行两种解决方案、比较输出并在出现差异时标记的脚本
 
-1. **Brute-force Solution**: A straightforward, guaranteed-correct implementation (may be slow but serves as the "truth source").  
-2. **Optimized Solution**: The faster solution whose correctness needs verification.  
-3. **Random Data Generator**: A program to produce diverse test cases covering edge cases and typical scenarios.  
-4. **Automation Script**: A script to repeatedly run both solutions on generated data, compare outputs, and flag discrepancies.  
+## I. 自动化脚本
 
+这些脚本自动化测试循环：生成数据、运行两种解决方案、比较结果并在失败时停止。
 
-## I. Automation Scripts
+### Shell 脚本 (Linux)
 
-These scripts automate the testing loop: generating data, running both solutions, comparing results, and stopping on failures.
-
-### Shell Script (Linux)
 ```sh
 #!/bin/bash
-g++ my.cpp -std=c++11 -o my # solution
-g++ bf.cpp -std=c++11 -o bf # brute-force precedure
-g++ rand.cpp -std=c++11 -o rand # data generator
+g++ my.cpp -std=c++11 -o my # 解决方案
+g++ bf.cpp -std=c++11 -o bf # 暴力过程
+g++ rand.cpp -std=c++11 -o rand # 数据生成器
 
 t=1
 while [ $t -lt 1000000 ]; do
-    printf "CASE%d:\n" $t
+    printf "用例%d:\n" $t
     
-    # '<' Input '>' Output will overwrite the original data. If you don't want to overwrite, use '<<' Input '>>' Output
-
+    # '<' 输入 '>' 输出将覆盖原始数据。如果不想覆盖，使用 '<<' 输入 '>>' 输出
     
-    ./rand > rand.in # data generated into rand.in file
+    ./rand > rand.in # 数据生成到 rand.in 文件
     
-    ./bf < rand.in > bf.out # The output from brute-force precedure input into bf.out file
+    ./bf < rand.in > bf.out # 暴力过程的输出到 bf.out 文件
     
-    time ./my < rand.in > my.out # The output from solution input into my.out file, also display running time
+    time ./my < rand.in > my.out # 解决方案的输出到 my.out 文件，同时显示运行时间
     
-    # -Z ignore the differences the trailling spaces
+    # -Z 忽略尾随空格的差异
     if diff -Z bf.out my.out; then 
         echo "AC\n"
     else 
         echo "WA\n"
-        cat rand.in # showing the input data. It optional and recommanded only for small data
+        cat rand.in # 显示输入数据。可选且建议仅适用于小数据
         break;
     
-    fi # the end of if statement
+    fi # if 语句结束
     
     let "t = $t + 1"
 done
 ```
 
-### C++ Script (Windows)
+$\newline$
+
+### C++ 脚本 (Windows)
+
 ```cpp
 #include <chrono>
 #include <cstdio>
@@ -73,24 +74,26 @@ int main() {
         double ed = clock();
         
         if (system("fc test.out bf.out > nul")) {
-            printf("#CASE%d: WA, cost time: %.0lfms\n", ++ c, ed - st);
+            printf("#用例%d: 错误, 耗时: %.0lfms\n", ++ c, ed - st);
             break;
         }
-        printf("#CASE%d: AC, cost time: %.0lfms\n", ++ c, ed - st);
+        printf("#用例%d: 通过, 耗时: %.0lfms\n", ++ c, ed - st);
     }
 
     return 0;
 }
 ```
 
-*Note: The Windows script can be adapted for Linux by replacing `fc` with `diff` and adjusting executable extensions.*
+*注意：Windows 脚本可以通过将 `fc` 替换为 `diff` 并调整可执行文件扩展名来适应 Linux。*
 
+$\newline$
 
-## II. Writing a Random Data Generator
+## II. 编写随机数据生成器
 
-A robust data generator ensures test cases cover diverse scenarios (e.g., small/large inputs, edge cases like empty sets or maximum values). Below are foundational tools and examples.
+强大的数据生成器确保测试用例涵盖多样化场景（例如，小/大输入、空集或最大值等边界情况）。以下是基础工具和示例。
 
-### Base Generator Utilities
+### 基础生成器工具
+
 ```cpp
 #include<cstdlib>
 #include <ctime>
@@ -98,9 +101,9 @@ A robust data generator ensures test cases cover diverse scenarios (e.g., small/
 using namespace std;
 
 typedef long long ll;
-// Since the range of the rand function Windows system is [0 - 32767],  for data with a larger number range, it may be necessary to multiply several times
-// But Linux like systems the range of the rand function is 0 to 2147483647, be sure to avoid having the generated data overflow
-// The following code genrates number in range from 0 to n - 1. If you want to get negative numbers, you can substract n from the numbers in range from 0 to 2n
+// 由于 Windows 系统中 rand 函数的范围是 [0 - 32767]，对于更大数值范围的数据，可能需要多次相乘
+// 但 Linux 类系统中 rand 函数的范围是 0 到 2147483647，务必避免生成的数据溢出
+// 以下代码生成从 0 到 n-1 范围的数字。如果需要负数，可以从 0 到 2n 范围的数字中减去 n
 
 int ri(int n) {
     return 1ll * rand() * rand() % n;
@@ -117,7 +120,8 @@ int main() {
 }
 ```
 
-### Example 1: Generate a Tree (n Nodes, n-1 Edges)
+### 示例 1：生成树（n 个节点，n-1 条边）
+
 ```cpp
 int n = ri(100000);
 
@@ -128,8 +132,10 @@ for (int i = 2 ; i <= n ; i ++ )  {
 }
 ```
 
-### Example 2: Generate a Connected Undirected Graph (n Nodes, m Edges)
-*Ensures no multiple edges or self-loops*
+### 示例 2：生成连通无向图（n 个节点，m 条边）
+
+*确保没有多重边或自环*
+
 ```cpp
 typedef pair<int, int> PII;
 PII e[N];
@@ -155,17 +161,15 @@ for (int i = 1 ; i <= m ; i ++ )
     printf("%d %d\n", e[i].first, e[i].second);
 ```
 
+## 如何使用此工作流程
 
-## How to Use This Workflow
+1. **准备实现**：编写优化解决方案（`my.cpp`）和暴力版本（`bf.cpp`）
+2. **构建生成器**：创建 `rand.cpp` 以生成与问题相关的测试用例（例如，图、数组或自定义结构）
+3. **运行脚本**：执行自动化脚本。它将：
+   - 编译所有程序
+   - 生成测试用例
+   - 在每个用例上运行两种解决方案
+   - 比较输出。如果不同，则停止并显示失败的输入
+4. **调试**：使用失败的输入来识别优化解决方案与暴力结果偏离的地方
 
-1. **Prepare Implementations**: Write your optimized solution (`my.cpp`) and a brute-force version (`bf.cpp`).  
-2. **Build the Generator**: Create `rand.cpp` to produce test cases relevant to your problem (e.g., graphs, arrays, or custom structures).  
-3. **Run the Script**: Execute the automation script. It will:  
-   - Compile all programs.  
-   - Generate test cases.  
-   - Run both solutions on each case.  
-   - Compare outputs. If they differ, it stops and shows the failing input.  
-4. **Debug**: Use the failing input to identify where your optimized solution deviates from the brute-force result.  
-
-
-This approach is invaluable for competitive programming, algorithm development, or any scenario where correctness must be verified across countless edge cases. By automating the process, you can test thousands of cases efficiently, ensuring your solution is robust.
+这种方法可以高效地测试上万个用例，确保解决方案的正确性。

@@ -1,165 +1,174 @@
-# Essential Programming Reference: Algorithms, Tools & Testing Workflows  
+# 三种经典排序方法
 
-This guide compiles core programming knowledge—from sorting algorithms and fast math techniques to utility functions, I/O tools, and pair checking workflows—into a single, practical resource. It’s tailored for developers and competitive programmers aiming to strengthen their foundational skills.  
+## 1. 三种常见排序算法的优化解析  
 
+排序是编程的基石，选择合适的算法取决于稳定性、空间效率或速度等优先级。以下是三种广泛使用的排序方法，针对实际性能进行了优化。  
 
-## 1. Optimized Breakdown of 3 Common Sorting Algorithms  
-Sorting is a cornerstone of programming, and selecting the right algorithm depends on priorities like stability, space efficiency, or speed. Below are three widely used sorting methods, optimized for real-world performance.  
+| 算法     | 时间复杂度                        | 主要优势                   | 适用场景                                       |
+| -------- | --------------------------------- | -------------------------- | ---------------------------------------------- |
+| 快速排序 | 平均: $O(nlogn)$<br>最差: $O(n²)$ | 实际应用快；额外空间极少   | 通用排序（例如，数值数组）                     |
+| 归并排序 | $O(nlogn)$                        | 稳定（保持相等元素的顺序） | 需要保持顺序的场景（例如，按多个键对对象排序） |
+| 堆排序   | $O(nlogn)$                        | 原地排序（$O(1)$额外空间） | 内存受限的系统（例如，嵌入式设备）             |
 
-| Algorithm   | Time Complexity       | Key Advantage                          | Use Case                                  |  
-|-------------|-----------------------|----------------------------------------|-------------------------------------------|  
-| Quick Sort  | Avg: O(nlogn); Worst: O(n²) | Fast in practice; minimal extra space  | General-purpose sorting (e.g., numeric arrays) |  
-| Merge Sort  | O(nlogn)              | Stable (preserves equal element order)  | Scenarios needing consistent order (e.g., sorting objects by multiple keys) |  
-| Heap Sort   | O(nlogn)              | In-place (O(1) extra space)            | Memory-constrained systems (e.g., embedded devices) |  
+### 2.1 快速排序
 
+#### 核心原理
 
-### 1.1 Quick Sort  
-#### Core Principle (Optimized Version)  
-Quick Sort leverages the **divide-and-conquer** approach, with its biggest optimization focused on **pivot selection**—the key to avoiding slow worst-case behavior:  
-- Instead of using a fixed first/last element as the pivot, pick the **middle element** (calculated via `l + r >> 1`, a faster bitwise alternative to `(l + r) / 2`). This nearly eliminates O(n²) time complexity (which plagues fixed-pivot setups for fully sorted arrays).  
-- Partitioning uses two pointers (`i` and `j`) to split the array:  
-  - `i` starts at `l - 1` and moves right until it finds an element ≥ pivot.  
-  - `j` starts at `r + 1` and moves left until it finds an element ≤ pivot.  
-  - If `i < j`, swap the elements to place smaller values left of the pivot and larger values right.  
-- Recursively sort the left subarray (from `l` to `j`) and right subarray (from `j + 1` to `r`).  
+  快速排序采用**分治**策略，其最大的优化点在于**基准选择**——这是避免最差性能的关键：  
 
-#### Code (Unchanged for Practicality)  
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
+  - 不使用固定的首/尾元素作为基准，而是选择**中间元素**（通过 `l + r >> 1` 计算，这是比 `(l + r) / 2` 更快的位运算替代方式）。这几乎消除了 $O(n^2)$ 的时间复杂度（固定基准在完全排序的数组上会出现此问题）。  
+  - 分区使用两个指针（`i` 和 `j`）来分割数组：  
+    - `i` 从 `l - 1` 开始向右移动，直到找到 ≥ 基准的元素。  
+    - `j` 从 `r + 1` 开始向左移动，直到找到 ≤ 基准的元素。  
+    - 如果 `i < j`，交换元素，将较小值置于基准左侧，较大值置于右侧。  
+  - 递归排序左子数组（从 `l` 到 `j`）和右子数组（从 `j + 1` 到 `r`）。  
 
-const int N = 1e5 + 10;
-int n, a[N];
+#### 代码:
 
-void quick_sort(int l, int r) {
-    if (l >= r) return;
-    int i = l - 1, j = r + 1, x = a[l + r >> 1];
-    while (i < j) {
-        while (a[ ++ i] < x);
-        while (a[ -- j] > x);
-        if (i < j) swap(a[i], a[j]);
-    }
-    quick_sort(l, j);
-    quick_sort(j + 1, r);
-}
+  ```cpp
+  #include <bits/stdc++.h>
+  
+  using namespace std;
+  
+  const int N = 1e5 + 10;
+  int n, a[N];
+  
+  void quick_sort(int l, int r) {
+      if (l >= r) return;
+      int i = l - 1, j = r + 1, x = a[l + r >> 1];
+      while (i < j) {
+          while (a[ ++ i] < x);
+          while (a[ -- j] > x);
+          if (i < j) swap(a[i], a[j]);
+      }
+      quick_sort(l, j);
+      quick_sort(j + 1, r);
+  }
+  
+  int main() {
+      cin >> n;
+      for (int i = 1; i <= n; i ++ ) cin >> a[i];
+      quick_sort(1, n);
+      for (int i = 1; i <= n; i ++ ) cout << a[i] << " ";
+      return 0;
+  }  
+  ```
 
-int main() {
-    cin >> n;
-    for (int i = 1; i <= n; i ++ ) cin >> a[i];
-    quick_sort(1, n);
-    for (int i = 1; i <= n; i ++ ) cout << a[i] << " ";
-    return 0;
-}
-```
+### 2.2 归并排序
 
-#### Key Optimization Notes  
-- Bitwise operations like `l + r >> 1` are faster than arithmetic division and avoid overflow for arrays up to 1e5 elements.  
-- Pre-increment/decrement (` ++ i`/` -- j`) skips redundant initial checks (e.g., no need to verify `a[l]` or `a[r]` first), speeding up the pointer scan.  
+  #### 核心原理（优化版本）  
 
+归并排序最大的优势是**稳定排序**（相等元素保持原始顺序）和保证的 $O(nlogn) $时间复杂度——这得益于其分治合并的工作流程：  
 
-### 1.2 Merge Sort  
-#### Core Principle (Optimized Version)  
-Merge Sort’s biggest strengths are **stable sorting** (equal elements keep their original order) and a guaranteed O(nlogn) time complexity—thanks to its divide-and-merge workflow:  
-- **Divide**: Recursively split the array into two halves (at `mid = l + r >> 1`) until each subarray has 1 element (naturally sorted).  
-- **Merge**: Use a temporary array `tmp` to combine two sorted subarrays:  
-  - Use two pointers (`i` for the left subarray, `j` for the right) to compare elements and add the smaller one to `tmp`.  
-  - After one subarray is exhausted, append the remaining elements of the other to `tmp`.  
-  - Copy `tmp` back to the original array to maintain sorted order.  
+  - **分**：递归地将数组分成两半（在 `mid = l + r >> 1` 处），直到每个子数组只有一个元素（自然有序）。  
+  - **合**：使用临时数组 `tmp` 合并两个有序子数组：  
+    - 使用两个指针（`i` 用于左子数组，`j` 用于右子数组）比较元素，并将较小的一个添加到 `tmp`。  
+    - 当一个子数组耗尽后，将另一个子数组的剩余元素追加到 `tmp`。  
+    - 将 `tmp` 复制回原数组以维持有序。  
 
-#### Code (Unchanged for Practicality)  
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
+#### 代码:
 
-const int N = 1e5 + 10;
-int n, a[N], tmp[N];
+  ```cpp
+  #include <bits/stdc++.h>
+  
+  using namespace std;
+  
+  const int N = 1e5 + 10;
+  int n, a[N], tmp[N];
+  
+  void merge_sort(int l, int r) {
+      if (l >= r) return;
+      int mid = l + r >> 1;
+      merge_sort(l, mid);
+      merge_sort(mid + 1, r);
+  
+      int i = l, j = mid + 1, cnt = 0;
+      while (i <= mid && j <= r) {
+          if (a[i] <= a[j]) tmp[cnt ++ ] = a[i ++ ];
+          else tmp[cnt ++ ] = a[j ++ ];
+      }
+      while (i <= mid) tmp[cnt ++ ] = a[i ++ ];
+      while (j <= r) tmp[cnt ++ ] = a[j ++ ];
+  
+      for (int k = l; k <= r; k ++ ) a[k] = tmp[k - l];
+  }
+  
+  int main() {
+      cin >> n;
+      for (int i = 1; i <= n; i ++ ) cin >> a[i];
+      merge_sort(1, n);
+      for (int i = 1; i <= n; i ++ ) cout << a[i] << " ";
+      return 0;
+  }
+  ```
 
-void merge_sort(int l, int r) {
-    if (l >= r) return;
-    int mid = l + r >> 1;
-    merge_sort(l, mid);
-    merge_sort(mid + 1, r);
+  #### 经典扩展：逆序对计数  
 
-    int i = l, j = mid + 1, cnt = 0;
-    while (i <= mid && j <= r) {
-        if (a[i] <= a[j]) tmp[cnt ++ ] = a[i ++ ];
-        else tmp[cnt ++ ] = a[j ++ ];
-    }
-    while (i <= mid) tmp[cnt ++ ] = a[i ++ ];
-    while (j <= r) tmp[cnt ++ ] = a[j ++ ];
+  逆序对是指满足 `i < j` 但 `a[i] > a[j]` 的一对元素。归并排序可以在合并步骤中自然地统计这些逆序对——只需在右子数组元素较小时，加上左子数组中剩余元素的数量即可：  
 
-    for (int k = l; k <= r; k ++ ) a[k] = tmp[k - l];
-}
+  ```cpp
+  // 添加一个初始化为 0 的 "res" 变量来存储逆序对数量
+  while (i <= mid && j <= r) {
+      if (a[i] <= a[j]) tmp[cnt ++ ] = a[i ++ ];
+      else {
+          tmp[cnt ++ ] = a[j ++ ];
+          res += mid - i + 1; // 从 i 到 mid 的所有左子数组元素都与 a[j-1] 形成逆序对
+      }
+  }
+  ```
 
-int main() {
-    cin >> n;
-    for (int i = 1; i <= n; i ++ ) cin >> a[i];
-    merge_sort(1, n);
-    for (int i = 1; i <= n; i ++ ) cout << a[i] << " ";
-    return 0;
-}
-```
+### 2.3 堆排序
 
-#### Classic Extension: Inversion Pair Count  
-An inversion pair is a pair of elements where `i < j` but `a[i] > a[j]`. Merge Sort can count these pairs naturally during the merge step—simply add the number of remaining elements in the left subarray when a right element is smaller:  
-```cpp
-// Add a "res" variable (initialized to 0) to store inversion count
-while (i <= mid && j <= r) {
-    if (a[i] <= a[j]) tmp[cnt ++ ] = a[i ++ ];
-    else {
-        tmp[cnt ++ ] = a[j ++ ];
-        res += mid - i + 1; // All left elements from i to mid form pairs with a[j-1]
-    }
-}
-```
+#### 核心原理
 
+  堆排序依赖于**最大堆**（一种完全二叉树，其中父节点 ≥ 子节点）并使用**原地调整**来最小化额外空间：  
 
-### 1.3 Heap Sort  
-#### Core Principle (Optimized Version)  
-Heap Sort relies on a **max-heap** (a complete binary tree where parent nodes are ≥ children) and uses **in-place adjustment** to minimize extra space:  
-1. **Heap Construction**: Start from the last non-leaf node (`n / 2`) and perform a "downward adjustment" (`down` function) to convert the array into a max-heap. This ensures the root (index 1) is the largest element.  
-2. **Sorting Step**:  
-   - Swap the root (max element) with the last element of the current heap (index `s`, where `s` is the heap size).  
-   - Decrease the heap size (`s -- `) to exclude the sorted element.  
-   - Re-run `down` on the new root to restore the max-heap property.  
-   - Repeat until the heap size is 1—this leaves the array sorted in ascending order.  
+  1.  **建堆**：从最后一个非叶子节点（`n / 2`）开始，执行“向下调整”（`down` 函数）将数组转换为最大堆。这确保根节点（索引 1）是最大元素。  
+  2.  **排序步骤**：  
+      - 将根节点（最大元素）与当前堆的最后一个元素（索引 `s`，`s` 是堆大小）交换。  
+      - 减小堆大小（`s -- `）以排除已排序的元素。  
+      - 在新的根节点上重新运行 `down` 以恢复最大堆性质。  
+      - 重复直到堆大小为 1——此时数组按升序排序完成。  
 
-#### Code (Unchanged for Practicality)  
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
+#### 代码:
 
-const int N = 1e5 + 10;
-int n, s, a[N];
+  ```cpp
+  #include <bits/stdc++.h>
+  
+  using namespace std;
+  
+  const int N = 1e5 + 10;
+  int n, s, a[N];
+  
+  void down(int u) {
+      int t = u; // t 存储最大元素的索引（当前节点或其子节点）
+      if (2 * u <= s && a[t] < a[2 * u]) t = 2 * u;   // 与左子节点比较
+      if (2 * u + 1 <= s && a[t] < a[2 * u + 1]) t = 2 * u + 1; // 与右子节点比较
+      if (t != u) { // 如果当前节点不是最大的，则交换并递归
+          swap(a[t], a[u]);
+          down(t);
+      }
+  }
+  
+  int main() {
+      cin >> n;
+      for (int i = 1; i <= n; i ++ ) cin >> a[i];
+      s = n;
+  
+      // 构建大根堆
+      for (int i = n / 2; i ; i -- ) down(i);
+  
+      while (s) {
+          down(1);
+          swap(a[1], a[s -- ]);
+      }
+  
+      for (int i = 1; i <= n; i ++ ) cout << a[i] << " ";
+      return 0;
+  }
+  ```
 
-void down(int u) {
-    int t = u; // t stores the index of the largest element (current node or children)
-    if (2 * u <= s && a[t] < a[2 * u]) t = 2 * u;   // Compare with left child
-    if (2 * u + 1 <= s && a[t] < a[2 * u + 1]) t = 2 * u + 1; // Compare with right child
-    if (t != u) { // If current node is not the largest, swap and recurse
-        swap(a[t], a[u]);
-        down(t);
-    }
-}
+  #### 关键优化说明  
 
-int main() {
-    cin >> n;
-    for (int i = 1; i <= n; i ++ ) cin >> a[i];
-    s = n;
-
-    // Build max-heap
-    for (int i = n / 2; i ; i -- ) down(i);
-
-    while (s) {
-        down(1);
-        swap(a[1], a[s ++ ]);
-    }
-
-    for (int i = 1; i <= n; i ++ ) cout << a[i] << " ";
-    return 0;
-}
-```
-
-#### Key Optimization Notes  
-- The variable `s` tracks the current heap size, avoiding array slicing and enabling in-place sorting (O(1) extra space).  
-- The `down` function is critical: it efficiently restores the max-heap by only swapping with the largest child, minimizing unnecessary operations.  
+  - 变量 `s` 跟踪当前堆大小，避免了数组切片，并实现了原地排序（$O(1)$ 额外空间）。  
+  - `down` 函数至关重要：它通过只与最大的子节点交换来高效恢复最大堆，最大限度地减少了不必要的操作。
