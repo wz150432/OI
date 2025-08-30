@@ -39,8 +39,8 @@
   - 双向广度优先搜索(Bidirectional BFS)
   - 双向深度优先搜索(Bidirectional DFS)
   - 搜索的数据流优化(Data Structure Optimization For Searching)
-  - A*算法(A*)
-  - IDE*算法(IDE*)
+  - A\*算法(A\*)
+  - IDE\*算法(IDE\*)
   - 模拟退火(Simulated Annealing)
 </details>
 
