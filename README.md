@@ -2,6 +2,8 @@
 
 这个仓库囊括了信息学奥赛所需的核心知识。从基础概念到高阶解题方法，助你在 OI 竞赛中脱颖而出的每一项关键技能都经过精心整理收录于此，助力你提升编码能力与竞赛表现。
 
+## **请勿去src-md 阅读文章，下方的目录含有超链接。内容持续更新中，请尽情期待~**
+
 <details>
   <summary><h2>前置知识(Prerequisite Knowledge)</h2></summary>
 
@@ -68,7 +70,7 @@
   - 块状链表(Block Linked List)
   - 动态树(Dynamic Tree)
   - 重心树(Centroid Tree)
-  </details>
+    </details>
 
 <details><summary><h2>动态规划(Dynamic Programming)</h2></summary>
 
