@@ -6,10 +6,45 @@
 
 <details><summary><h2>基础入门（BASIC INTRODUCTION）</h2></summary>
 
+<<<<<<< HEAD
 - 标准模板库（STL）
 - [对组判断（Pair Checking）](https://github.com/wz150432/OI-cpp/blob/main/Pair Checking.md)
 - [常用库函数（Commonly Used Library Functions）](https://github.com/wz150432/OI-cpp/blob/main/Commonly Used Library Functions.md)
 - 时间复杂度估算
+=======
+<details>
+  <summary><h2>SUNDRY</h2></summary>
+  
+- [Binary Search](https://github.com/wz150432/OI-cpp/blob/main/Binary%20Search.md)
+- Greedy
+- [Sort](https://github.com/wz150432/OI-cpp/blob/main/Sort.md)
+- High Precision
+- Square Root Decomposition
+- Bitwise Operation
+- Prefix Sum and Difference
+- Binary Lifting
+- KMP Matching
+- Centroid Decomposition
+- Block Processing
+- CDQ Divide and Conquer
+  
+</details>
+
+<details>
+  <summary><h2>SEARCH</h2></summary>
+  
+- BFS
+- DFS
+- Pruning
+- Iterative Deepening
+- Meet-in-the-Middle
+- Bidirectional BFS
+- Bidirectional DFS
+- Data Structure Optimization For Searching
+- A*
+- IDE*
+- Simulated Annealing
+>>>>>>> d26b39db16e935fd74c9ca3767a140612f65ea53
 
 </details>
 
@@ -95,6 +130,7 @@
 - 矩阵快速幂优化动态规划（Matrix Exponentiation Optimized DP）
 
 </details>
+<<<<<<< HEAD
 
 <details><summary><h2>图论（GRAPH THEORY）</h2></summary>
 
@@ -154,5 +190,32 @@
 - 伯恩赛德引理与波利亚计数定理（Burnside's Lemma and Pólya's Theorem）
 - 卡特兰数与斯特林数（Catalan Numbers and Stirling Numbers）
 - 线性基（Linear Basis）
+=======
+    
+<details>
+  <summary><h2>MATH</h2></summary>
+  
+  - Prime Numbers and Divisors
+  - [Euler's Totient Function](https://github.com/wz150432/OI-cpp/blob/main/Math/Euler.md)
+  - Sieve Method
+  - [Fast Power](https://github.com/wz150432/OI/blob/main/Math/Fast-Power.md)
+  - [Euclidean Algorithm](https://github.com/wz150432/OI-cpp/blob/main/Math/Euclidean.md)
+  - Chinese Remainder Theorem
+  - Combinatorial Number Calculation
+  - Gaussian Elimination
+  - Inclusion Exclusion Principle
+  - Game Theory
+  - Matrix Multiplication
+  - Probability and Mathematical Expectation
+  - Baby Step Giant Step
+  - Fast Fourier Transform
+  - Number Theoretic Transform
+  - Fast Walsh Hadamard Transform
+  - Generating Function
+  - Möbius Inversion
+  - Burnside's Lemma and Pólya's Theorem
+  - Catalan Numbers and Stirling Numbers
+  - Linear Basis
+>>>>>>> d26b39db16e935fd74c9ca3767a140612f65ea53
 
 </details>
