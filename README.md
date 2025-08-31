@@ -2,7 +2,7 @@
 
 这个仓库囊括了信息学奥赛所需的核心知识。从基础概念到高阶解题方法，助你在 OI 竞赛中脱颖而出的每一项关键技能都经过精心整理收录于此，助力你提升编码能力与竞赛表现。
 
-## **请勿去src-md 阅读文章，下方的目录含有超链接。内容持续更新中，请尽情期待~**
+## 请勿去src-md 阅读文章，下方的目录含有超链接。内容持续更新中，请尽情期待~
 
 <details>
   <summary><h2>前置知识(Prerequisite Knowledge)</h2></summary>
@@ -26,6 +26,7 @@
   - KMP 匹配算法(KMP Matching)
   - 点分治(Centroid Decomposition)
   - 分块处理(Block Processing)
+  - 根号分治(Square root decomposition)
   - CDQ 分治(CDQ Divide and Conquer)
 </details>
 
@@ -63,7 +64,7 @@
   - 后缀数组(Suffix Array)
   - 后缀自动机(Suffix Automaton)
   - 前缀自动机(Prefix Automaton)
-  - AC 自动机(Aho Coracisk Automaton)
+  - AC自动机(Aho Coracisk Automaton)
   - 舞蹈链(Dancing Links)
   - 左偏树(Leftist Tree)
   - 树链剖分(Heavy Light Decomposition)
@@ -129,9 +130,9 @@
 
 <details><summary><h2>数学(Math)</h2></summary>
 
-  - 质数与约数(Prime Numbers and Divisors)
+  - [质数与约数(Prime Numbers and Divisors)](https://www.cnblogs.com/wz150432)
   - [欧拉函数(Euler's Totient Function)](https://www.cnblogs.com/wz150432/articles/19065275)
-  - 筛法(Sieve Method)
+  - [筛法(Sieve Method)](https://www.cnblogs.com/wz150432/articles/19066136)
   - [快速幂(Fast Exponentiation)](https://www.cnblogs.com/wz150432/articles/19065276)
   - [欧几里得算法(Euclidean Algorithm)](https://www.cnblogs.com/wz150432/articles/19065274)
   - 中国剩余定理(Chinese Remainder Theorem)
