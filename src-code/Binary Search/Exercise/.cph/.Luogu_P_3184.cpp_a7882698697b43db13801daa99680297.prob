@@ -1,0 +1,1 @@
+{"name":"Luogu - P3184","url":"https://www.luogu.com.cn/problem/P3184","memoryLimit":128000,"timeLimit":1000,"tests":[{"id":1758956363690,"input":"4 6\n3 2 7 5\n2 3\n2 4\n2 5\n2 7\n4 6\n8 10","output":"2\n2\n3\n4\n1\n0"}],"group":"luogu","srcPath":"c:\\Users\\汪洲william\\OneDrive\\Desktop\\Github\\OI\\src-code\\Binary Search\\Exercise\\Luogu_P_3184.cpp"}
