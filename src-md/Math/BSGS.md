@@ -31,9 +31,7 @@ $
 - **小步（Baby Step）**：预处理所有 $j \in [0, k-1]$ 对应的 $b \cdot a^j \pmod{p}$，存入哈希表，键为结果值，值为 $j$（记录小步的索引）；  
 - **大步（Giant Step）**：计算 $a^k \pmod{p}$（记为 $ak$），再遍历 $i \in [1, k]$ 计算 $ak^i \pmod{p}$（即 $a^{i \cdot k} \pmod{p}$），若该值在哈希表中存在，则对应的 $x = i \cdot k - j$ 就是解。
 
-
-### 2. 朴素BSGS代码解析（参考你的代码）
-先看你提供的朴素BSGS代码，逐段拆解关键逻辑：
+### 2. 朴素BSGS代码解析
 
 ```cpp
 #include <bits/stdc++.h>
@@ -125,9 +123,9 @@ a^{x-k} \equiv b_k \cdot C^{-1} \pmod{p_k}
 $ 
 用朴素BSGS求解该方程的解 $x' = x - k$，则原方程的解为 $x = x' + k$。
 
+### 2. 扩展BSGS代码
 
-### 2. 扩展BSGS代码解析（参考你的代码）
-你的代码中用到了扩展欧几里得算法（exgcd）求逆元，先回顾exgcd的作用：求 $ax + by = gcd(a, b)$ 的整数解，若 $gcd(a, b) = 1$，则 $x$ 是 $a$ 在 mod $b$ 下的逆元。
+代码中用到了扩展欧几里得算法（exgcd）求逆元，先回顾exgcd的作用：求 $ax + by = gcd(a, b)$ 的整数解，若 $gcd(a, b) = 1$，则 $x$ 是 $a$ 在 mod $b$ 下的逆元。
 
 ```cpp
 #include <bits/stdc++.h>
@@ -201,8 +199,26 @@ int main() {
 - **逆元计算**：`exgcd(a/d, p/d, x, y)` 得到 $a/d$ 在 mod $p/d$ 下的逆元 $x$，因此 `(1ll * b/d * x) % (p/d)` 就是 $b/d \cdot (a/d)^{-1} \pmod{p/d}$，对应推导中的 $b_1 \cdot a_1^{-1}$；  
 - **递归返回值**：`+1` 是因为每次约分对应 $x$ 减少1（原方程是 $a^{x-1}$），递归得到的是 $x-k$，需要加 $k$（这里每次递归加1，累计加 $k$）。
 
-
 ## 五、总结
+
 - **朴素BSGS**：适用于 $a$ 与 $p$ 互质的离散对数问题，时间复杂度 $O(\sqrt{p})$，核心是分块查找；  
 - **扩展BSGS**：通过逐步约分处理 $a$ 与 $p$ 不互质的情况，递归转化为朴素BSGS可解的形式，时间复杂度仍为 $O(\sqrt{p})$；  
 - **应用场景**：数论题目中涉及“求指数”的问题，如模方程求解、密码学中的离散对数问题（OI中常见于NOIP提高组或省选难度题目）
+
+
+
+## 例题
+
+[P3846](https://www.luogu.com.cn/problem/P3846)
+
+[P4195](https://www.luogu.com.cn/problem/P4195)
+
+
+
+## 推荐的练习
+
+[SP3105](https://www.luogu.com.cn/problem/SP3105)
+
+[P3306](https://www.luogu.com.cn/problem/P3306)
+
+[P2485](https://www.luogu.com.cn/problem/P2485)

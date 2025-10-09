@@ -319,3 +319,17 @@ int main() {
 | 快速幂（欧拉定理） | $O(log MOD)$ | `gcd(a,MOD) = 1`（MOD 任意）    | 单个数逆元（MOD 非质数）   |
 | 拓展欧几里得       | $O(log MOD)$ | `gcd(a,MOD) = 1`（MOD 任意）    | 单个数逆元（需判断存在性） |
 | $O(n) $递推        | $O(n)$       | MOD 是质数，需批量求 `1~n` 逆元 | 组合数批量计算、多组查询   |
+
+
+
+## 例题
+
+[P3811](https://www.luogu.com.cn/problem/P3811)
+
+[P5431](https://www.luogu.com.cn/problem/P5431)
+
+
+
+## 推荐的练习
+
+[P12028](https://www.luogu.com.cn/problem/P12028)

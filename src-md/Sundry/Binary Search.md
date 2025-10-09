@@ -1,5 +1,11 @@
 # 二分
 
+
+
+## [视频讲解](https://www.bilibili.com/video/BV1YwnJzLEZg/?spm_id_from=333.1387.upload.video_card.click&vd_source=b58db3d3fdc9eaba978ccedfddb9d97e)
+
+
+
 ## 1. 核心原理
 
 二分法（Binary Search）是一种高效的查找算法，其核心原理围绕 “逐步缩小搜索范围” 展开，通过反复将搜索区间 “对半分割”，快速定位目标值。它依赖答案集合的单调性来求解最优解，是典型的 “分治思想” 应用，时间复杂度低至 $O(log n)$，远优于线性查找的 $O (n)$ 。

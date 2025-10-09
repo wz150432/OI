@@ -1,0 +1,10 @@
+
+
+## 例题
+
+[P1495](https://www.luogu.com.cn/problem/P1495)
+
+
+
+## 推荐的练习
+

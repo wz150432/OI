@@ -173,3 +173,17 @@ FFT的核心是"用分治思想+单位根性质，将系数乘法的高复杂度
 1. 位逆序置换：优化递归到迭代的过程
 2. 蝶形运算：利用单位根快速合并分治结果
 3. 逆变换修正：将点值转换回系数
+
+
+
+## 例题
+
+[P3803](https://www.luogu.com.cn/problem/P3803)
+
+
+
+## 推荐的练习
+
+[P1919](https://www.luogu.com.cn/problem/P1919)
+
+[UVA12298](https://www.luogu.com.cn/problem/UVA12298)

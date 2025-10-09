@@ -361,3 +361,25 @@ int main() {
 | 阶乘+逆元        | $a \leq 10^5$，模数为质数  | 范围大、查询快   | 依赖质数模数       |
 | 卢卡斯定理       | $a, b$ 极大，模数为小质数  | 支持超大组合数   | 模数必须是质数     |
 | 高精度           | 需要精确值，无模数限制     | 结果绝对精确     | 代码复杂、效率一般 |
+
+
+
+## 例题
+
+[P3807](https://www.luogu.com.cn/problem/P3807)
+
+[B2164](https://www.luogu.com.cn/problem/B2164)
+
+[B3717](https://www.luogu.com.cn/problem/B3717)
+
+[Acwing-求组合数 IV](https://www.acwing.com/problem/content/890/)
+
+
+
+## 推荐的练习
+
+[P1771](https://www.luogu.com.cn/problem/P1771)
+
+[P1350](https://www.luogu.com.cn/problem/P1350)
+
+[P3166](https://www.luogu.com.cn/problem/P3166)

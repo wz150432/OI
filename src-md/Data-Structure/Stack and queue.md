@@ -1,7 +1,6 @@
-# 栈与队列：C++实现的核心线性数据结构
+# 栈与队列基础应用
 
-线性数据结构——元素按顺序排列——是编程的基石。其中，**栈（Stack）** 和 **队列（Queue）** 因其简洁性及在算法中的广泛应用（如栈用于深度优先搜索，队列用于广度优先搜索）而脱颖而出。本文将以你的代码为实践参考，解析它们的核心概念、操作及基于模板的 C++ 实现。
-
+线性数据结构——元素按顺序排列——是编程的基石。其中，**栈（Stack）** 和 **队列（Queue）** 因其简洁性及在算法中的广泛应用（如栈用于深度优先搜索，队列用于广度优先搜索）而脱颖而出。
 
 ## 1. 栈：后进先出（LIFO）
 
@@ -29,7 +28,8 @@ $$
 
 ### 栈实现
 
-c++代码：
+c++ 代码：
+
 ```cpp
 #include <iostream>
 
@@ -108,7 +108,9 @@ $$
 
 
 ### 队列实现
+
 c++ 代码：
+
 ```cpp
 #include <iostream>
 
@@ -178,8 +180,29 @@ int main() {
 | 常见应用场景 | - 函数调用栈<br>- 撤销/重做功能<br>- 深度优先搜索（DFS）算法 | - 任务调度<br>- 打印队列<br>- 广度优先搜索（BFS）算法 |
 
 
-## 总结
 
-栈和队列因其简洁性和高效性而成为基础数据结构。你基于模板的实现清晰且可复用——它们利用了 C++ 的泛型编程，可以处理任何数据类型，非常适合竞赛编程或小型项目。
+## 例题
 
-下次当你需要按顺序管理元素时，问问自己：我需要LIFO（栈）还是FIFO（队列）？ 这个简单的问题将指引你选择正确的工具！
+[B3614](https://www.luogu.com.cn/problem/B3614)
+
+[P2201](https://www.luogu.com.cn/problem/P2201)
+
+[P1449](https://www.luogu.com.cn/problem/P1449)
+
+[P1540](https://www.luogu.com.cn/problem/P1540)
+
+[B3616](https://www.luogu.com.cn/problem/B3616)
+
+
+
+## 推荐的题目
+
+[UVA540](https://www.luogu.com.cn/problem/UVA540)
+
+[P10472](https://www.luogu.com.cn/problem/P10472)
+
+[P10473](https://www.luogu.com.cn/problem/P10473)
+
+[UVA1330](https://www.luogu.com.cn/problem/UVA1330)
+
+[P1155](https://www.luogu.com.cn/problem/P1155)

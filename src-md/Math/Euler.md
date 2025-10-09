@@ -6,8 +6,8 @@
 
 示例：
 
-- $\phi(6) = 2$（1和5与6互质）
-- $\phi(7) = 6$（1 - 6所有数都与质数7互质）
+- $\phi(6) = 2$（1 和 5 与 6 互质）
+- $\phi(7) = 6$（1 - 6 所有数都与质数 7 互质）
 
 ## 2. 关键公式
 
@@ -256,3 +256,23 @@ phi(8) = 4
 phi(9) = 6
 phi(10) = 4
 ```
+
+
+
+## 例题
+
+[Acwing-873](https://www.acwing.com/problem/content/875/)
+
+[Acwing-874](https://www.acwing.com/problem/content/876/)
+
+
+
+## 推荐的练习
+
+[P2158](https://www.luogu.com.cn/problem/P2158)
+
+[P2568](https://www.luogu.com.cn/problem/P2568)
+
+[P4139](https://www.luogu.com.cn/problem/P4139)
+
+[P2398](https://www.luogu.com.cn/problem/P2398)

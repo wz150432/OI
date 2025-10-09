@@ -1,6 +1,6 @@
 # 质数与约数
 
-在信息学竞赛中，数论模块的核心在于对质数性质的理解与应用。本文将从最朴素的质数判定方法开始，逐步优化算法，并延伸至质因数分解及因子定理的推导与实现，为OIer提供完整的知识链。
+在信息学竞赛中，数论模块的核心在于对质数性质的理解与应用。本文将从最朴素的质数判定方法开始，逐步优化算法，并延伸至质因数分解及因子定理的推导与实现。
 
 ## 一、质数判定：从暴力到优化
 
@@ -229,3 +229,23 @@ int main() {
 
 - 模意义下的除法通过费马小定理转化为乘法：$a / b \equiv a \times b^{MOD-2} \mod MOD$（要求$MOD$为质数）。  
 - 快速幂将等比数列求和的时间复杂度降至 $O(\log s)$。
+
+
+
+## 例题
+
+[P1075](https://www.luogu.com.cn/problem/P1075)
+
+[B3715](https://www.luogu.com.cn/problem/B3715)
+
+[约数个数](https://www.acwing.com/problem/content/872/)
+
+[约数之和](https://www.acwing.com/problem/content/873/)
+
+
+
+## 推荐的练习
+
+[P1072](https://www.luogu.com.cn/problem/P1072)
+
+[P1463](https://www.luogu.com.cn/problem/P1463)
